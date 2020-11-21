@@ -27,6 +27,7 @@ PLAYING: Dict[discord.Guild, monopoly_core.Monopoly] = {}
 # DEFINITIONS: Dict[Any, Any] = {}
 BOARD: Dict[str, Any] = {}
 EMOJIS: Dict[str, Any] = {}
+EMBEDS: Dict[str, Dict[str, str]] = {}
 monopoly_bot = commands.Bot(command_prefix=prefix)
 
 
@@ -107,7 +108,7 @@ async def start(ctx):
                 players, monopoly_bot, ctx.channel, BOARD, EMOJIS)
             PLAYING[ctx.guild] = game
             WAITING.pop(ctx.guild)
-            await game.decide_order()
+            await game.play()
             PLAYING.pop(ctx.guild)
     except KeyError:
         await ctx.send(":x: There's no game to start!")
@@ -165,9 +166,12 @@ async def on_ready():
     #            definitions[guild.id] = definitions["default"]
     # with open("definitions.json", "w") as file:
     #    json.dump(definitions, file, indent="\t")
-    with open("BOARD.json", "r") as file:
+    with open("board.json", "r") as file:
         global BOARD
         BOARD = json.load(file)
+    with open("embeds.json", "r") as file:
+        global EMBEDS
+        EMBEDS = json.load(file)
     for emoji in monopoly_bot.emojis:
         EMOJIS[emoji.name] = str(emoji)
     print("We are ready to roll!")
