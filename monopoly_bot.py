@@ -28,7 +28,7 @@ PLAYING: Dict[discord.Guild, monopoly_core.Monopoly] = {}
 BOARD: Dict[str, Any] = {}
 EMOJIS: Dict[str, Any] = {}
 EMBEDS: Dict[str, Dict[str, str]] = {}
-monopoly_bot = commands.Bot(command_prefix=prefix)
+monopoly_bot = commands.AutoShardedBot(command_prefix=prefix)
 
 
 async def look_for_player(caller: discord.User) -> bool:
@@ -50,36 +50,51 @@ async def look_for_player(caller: discord.User) -> bool:
 async def play(ctx):
     # Checks if there's already a game WAITING to start
     # If not, make a new one
+    # Else if it is the first issuer of the command, start the game,
+    # Else join the game
+
+    # Check if there's a game waiting
     try:
-        print(WAITING[ctx.guild])
+        WAITING[ctx.guild]
     except KeyError:
+        # Check if there's a game in course
         try:
-            print(PLAYING[ctx.guild])
+            PLAYING[ctx.guild]
+        # Join the game
         except KeyError:
             if await look_for_player(ctx.author):
                 await ctx.send(":x: You are already in a game in this or in another server!")
             else:
                 WAITING[ctx.guild] = [ctx.author]
                 embed_to_send = discord.Embed(title="Game WAITING",
-                                              description="If you want to join the game, use =join."
-                                                          "\nOnce you want to start, use =start."
-                                                          "\nUp to four players can join.",
+                                              description="If you want to join the game, use =play."
+                                                          "\nOnce you want to start, {} should use =play."
+                                                          "\nUp to four players can join.".format(ctx.author),
                                               timestamp=datetime.datetime.now())
                 embed_to_send.set_author(name="{.author} wants to start a game!".format(ctx),
                                          icon_url=str(ctx.author.avatar_url))
                 embed_to_send.set_footer(
                     text="Monopoly Game at \"{.guild}\"".format(ctx))
                 await ctx.send(embed=embed_to_send)
+        else:
+            print("There's a game in course in this server!")
+    # Make a game or join it
     else:
-        await ctx.send(":x: There's already a game WAITING to start or one is already on course")
-
-
-@monopoly_bot.command(help="Lets you join the current Monopoly lobby in your server")
-@commands.guild_only()
-async def join(ctx):
-    try:
-        if ctx.author in WAITING[ctx.guild]:
-            await ctx.send(":x: You are already WAITING for the game")
+        if ctx.author == WAITING[ctx.guild][0]:
+            if len(WAITING[ctx.guild]) == 1:
+                await ctx.send(":grey_exclamation: There aren't enough players to start. You need at least 2.")
+            else:
+                players = []
+                for player in WAITING[ctx.guild]:
+                    players.append(monopoly_core.Player(player))
+                game = monopoly_core.Monopoly(
+                    players, monopoly_bot, ctx.channel, BOARD, EMOJIS, EMBEDS)
+                PLAYING[ctx.guild] = game
+                WAITING.pop(ctx.guild)
+                await game.play()
+                PLAYING.pop(ctx.guild)
+        elif ctx.author in WAITING[ctx.guild]:
+            await ctx.send(":x: You are already WAITING for the game! The first caller of the play command should be the one to start.")
         elif await look_for_player(ctx.author):
             await ctx.send(":x: You are already in a game in this or in another server!")
         else:
@@ -90,39 +105,18 @@ async def join(ctx):
                                                                               len(WAITING[ctx.guild])))
             else:
                 await ctx.send(":x: The game is already full")
-    except KeyError:
-        await ctx.send(":x: There are no current games WAITING to start")
-
-
-@monopoly_bot.command(help="If there's a lobby with enough people in it, then this command will start the game")
-@commands.guild_only()
-async def start(ctx):
-    try:
-        if len(WAITING[ctx.guild]) == 1:
-            await ctx.send(":grey_exclamation: There aren't enough players to start. You need at least 2.")
-        else:
-            players = []
-            for player in WAITING[ctx.guild]:
-                players.append(monopoly_core.Player(player))
-            game = monopoly_core.Monopoly(
-                players, monopoly_bot, ctx.channel, BOARD, EMOJIS)
-            PLAYING[ctx.guild] = game
-            WAITING.pop(ctx.guild)
-            await game.play()
-            PLAYING.pop(ctx.guild)
-    except KeyError:
-        await ctx.send(":x: There's no game to start!")
 
 
 @monopoly_bot.command(help="Lets you leave the lobby you're in")
 @commands.guild_only()
 async def leave(ctx):
-    if WAITING[ctx.guild] == 1:
-        await ctx.send(":x: Use {}stop to leave".format("="))
     try:
-        WAITING[ctx.guild].remove(ctx.author)
-        await ctx.send(":white_check_mark: {.author.mention} "
-                       "has been removed from the game ({}/4)".format(ctx, len(WAITING[ctx.guild])))
+        if WAITING[ctx.guild] == 1:
+            await ctx.send(":x: Use {}stop to leave".format("="))
+        else:
+            WAITING[ctx.guild].remove(ctx.author)
+            await ctx.send(":white_check_mark: {.author.mention} "
+                        "has been removed from the game ({}/4)".format(ctx, len(WAITING[ctx.guild])))
     except KeyError:
         await ctx.send(":x: You are not WAITING for any game!")
 
@@ -134,11 +128,12 @@ async def stop(ctx):
         WAITING.pop(ctx.guild)
         await ctx.send(":grey_exclamation: Your game has been cancelled")
     except KeyError:
-        try:
-            await ctx.send("The game will stop after next player's turn")
-            PLAYING[ctx.guild].stop = True
-        except KeyError:
-            await ctx.send(":x: There are no games to stop")
+        pass
+        # try:
+        #    await ctx.send("The game will stop after next player's turn")
+        #    PLAYING[ctx.guild].stop = True
+        # except KeyError:
+        #    await ctx.send(":x: There are no games to stop")
 
 
 @monopoly_bot.group()
@@ -169,7 +164,7 @@ async def on_ready():
     with open("board.json", "r") as file:
         global BOARD
         BOARD = json.load(file)
-    with open("embeds.json", "r") as file:
+    with open("embeds.json", "r", encoding="utf_8") as file:
         global EMBEDS
         EMBEDS = json.load(file)
     for emoji in monopoly_bot.emojis:
@@ -180,7 +175,7 @@ async def on_ready():
 @monopoly_bot.event
 async def on_guild_join(guild):
     #definitions[guild.id] = definitions["default"]
-    #with open("definitions.json.json", "w") as file:
+    # with open("definitions.json.json", "w") as file:
     #   json.dump(definitions, file, indent="\t")
     pass
 
