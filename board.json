@@ -6,7 +6,8 @@
 			"type": "start",
 			"salary": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Brown Property 1",
@@ -27,13 +28,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Brown Property 2",
@@ -54,14 +57,16 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Income Tax",
 			"type": "tax",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Railroad 1",
@@ -72,7 +77,14 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"rent": [
+				25,
+				50,
+				100,
+				200
+			],
+			"here": []
 		},
 		{
 			"name": "Light Blue Property 1",
@@ -93,13 +105,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Chance",
 			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Light Blue Property 2",
@@ -120,7 +134,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Light Blue Property 3",
@@ -141,17 +156,20 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Jail",
 			"type": "jail",
 			"color_int": 15567909,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"jailed": [],
+			"here": []
 		},
 		{
 			"name": "Magenta Property 1",
-			"type": "colot_property",
+			"type": "color_property",
 			"color": "magenta",
 			"cost": 140,
 			"rent": [
@@ -168,7 +186,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Eletric Company",
@@ -179,7 +198,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Magenta Property 2",
@@ -200,13 +220,14 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Magenta Property 3",
 			"type": "color_property",
 			"color": "magenta",
-			"cost": 140,
+			"cost": 160,
 			"rent": [
 				12,
 				60,
@@ -221,7 +242,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Railroad 2",
@@ -232,7 +254,14 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"rent": [
+				25,
+				50,
+				100,
+				200
+			],
+			"here": []
 		},
 		{
 			"name": "Orange Property 1",
@@ -253,13 +282,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Orange Property 2",
@@ -280,7 +311,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Orange Property 3",
@@ -301,13 +333,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Free Parking",
 			"type": "free_space",
 			"color_int": 14362410,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Red Property 1",
@@ -328,13 +362,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Chance",
-			"type": "lucky_card0",
+			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Red Property 2",
@@ -355,13 +391,14 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Red Property 3",
 			"type": "color_property",
 			"color": "red",
-			"cost": 220,
+			"cost": 240,
 			"rent": [
 				20,
 				100,
@@ -376,7 +413,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Railroad Property 3",
@@ -387,7 +425,14 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"rent": [
+				25,
+				50,
+				100,
+				200
+			],
+			"here": []
 		},
 		{
 			"name": "Yellow Property 1",
@@ -408,7 +453,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Yellow Property 2",
@@ -429,7 +475,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Water Works",
@@ -440,7 +487,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Yellow Property 3",
@@ -461,13 +509,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Go to Jail",
 			"type": "jailing",
 			"color_int": 27043,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Green Property 1",
@@ -488,7 +538,8 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Green Property 2",
@@ -509,13 +560,15 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Green Property 3",
@@ -536,23 +589,33 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Railroad Property 4",
 			"type": "railroad_property",
 			"cost": 200,
 			"color_int": 1,
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"rent": [
+				25,
+				50,
+				100,
+				200
+			],
+			"here": []
 		},
 		{
 			"name": "Chance",
 			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Dark Blue Property 1",
@@ -573,14 +636,16 @@
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		},
 		{
 			"name": "Luxury Tax",
 			"type": "tax",
 			"cost": 100,
 			"color_int": 16379444,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"here": []
 		},
 		{
 			"name": "Dark Blue Property 2",
@@ -596,12 +661,13 @@
 				2000
 			],
 			"house_cost": 200,
-			"color_int": 16379444,
+			"color_int": 26276,
 			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null
+			"space": null,
+			"here": []
 		}
 	],
 	"luck_cards": [

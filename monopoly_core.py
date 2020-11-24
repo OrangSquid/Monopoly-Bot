@@ -74,14 +74,16 @@ class Monopoly:
         # "board", "properties", "trade", "bankruptcy"
         self.valid_reactions: List[str] = []
         for space in self.board["spaces"]:
-            if space["type"].endswith("property"):
-                space["space"] = None
+            if space["type"] == "railroad_property":
+                space["house_level"] = 0
+                space["rent"] = [25, 50, 100, 200]
+            elif space["type"] == "serive_property":
+                space["house_level"] = 0
+            elif space["type"] == "jail":
+                space["jailed"] = []
+            space["here"] = []
         with open("board.json", "w") as file:
             json.dump(self.board, file, indent="\t")
-
-    ''' def check_die_reaction(self, reaction: discord.Emoji, user: discord.User) -> bool:
-            # Function used to check if user wants to roll dice
-            return user == self.players[self.pointer].user and str(reaction.emoji) == "🎲"'''
 
     def check_reaction(self, reaction: discord.Emoji, user: discord.User) -> bool:
         self.choice = self.emoji_to_str_reactions[str(reaction.emoji)]
@@ -127,8 +129,9 @@ class Monopoly:
         for reaction in reactions:
             await message.add_reaction(self.str_to_emoji_reactions[reaction])
 
-    async def moving_on_board(self, playing, house, doubles, roll_dice):
-        debt: List[Any] = [0, None]
+    async def moving_on_board(self, playing, house_int, doubles, roll_dice) -> Dict:
+        # debt = [amount of money, int refering to self.order player]
+        debt: List[int] = [0, None]
         buy_property: bool = False
         auction_property: bool = False
 
@@ -148,24 +151,30 @@ class Monopoly:
                 doubles += 1
                 embed_landing.description += "\nYou rolled a double!, you can play again!"
         # Add total of dice and put it back into self.order
-        self.board["spaces"][house]["here"] = None
-        if house + sum(dice) > 39:
-            house += sum(dice) - 39
+        self.board["spaces"][house_int]["here"].remove(self.pointer)
+        if house_int + sum(dice) > 39:
+            house_int += sum(dice) - 40
+            playing.space = house_int
         else:
-            house += sum(dice)
-        self.order[self.pointer][1] = house
-        self.board["spaces"][house]["here"] = playing
+            house_int += sum(dice)
+            playing.space = house_int
+        self.order[self.pointer][1] = house_int
+        self.board["spaces"][house_int]["here"].append(self.pointer)
+        house_dict = self.board["spaces"][house_int]
+
+        # Embed
         embed_landing.description = embed_landing.description.format(self.emojis["Dice{}".format(
-            dice[0])], self.emojis["Dice{}".format(dice[1])], sum(dice), self.board["spaces"][house]["name"])
-        embed_landing.color = self.board["spaces"][house]["color_int"]
+            dice[0])], self.emojis["Dice{}".format(dice[1])], sum(dice), house_dict["name"])
+        embed_landing.color = house_dict["color_int"]
         embed_landing.timestamp = datetime.datetime.now()
         embed_landing.set_thumbnail(
-            url=self.board["spaces"][house]["image_url"])
+            url=house_dict["image_url"])
 
-        if self.board["spaces"][house]["type"].endswith("property"):
+        # Lands on property
+        if house_dict["type"].endswith("property"):
             # Buy or auction
-            if self.board["spaces"][house]["owner"] == None:
-                if self.board["spaces"][house]["cost"] < playing.money:
+            if house_dict["owner"] == None:
+                if house_dict["cost"] < playing.money:
                     embed_landing.description += "\nYou can buy or auction this property!"
                     buy_property = True
                     auction_property = True
@@ -173,76 +182,150 @@ class Monopoly:
                     embed_landing.description += "\nYou don't have enough money!\nYou must auction this property!"
                     auction_property = True
             # Mortgaged
-            elif self.board[house]["mortgage"]:
+            elif house_dict["mortgage"]:
                 embed_landing.description += "\nThis property is mortgaged!\nYou don't need to pay rent!"
             # Own property
-            elif self.board["spaces"][house]["owner"] == playing:
+            elif house_dict["owner"] == playing:
                 embed_landing.description += "\nYou landed on your own property!"
             # Pay Rent
             else:
-                if self.board[house]["type"] == "color_property":
-                    debt = [self.board["spaces"]["rent"][self.board["spaces"]
-                                                         [house]["house_level"]], self.board["spaces"][house]["owner"]]
-                elif self.board[house]["type"] == "service_property":
-                    debt = [sum(dice) * 6 * self.board["spaces"][house]
-                            ["owner"].properties["serivce_properties"] - 2, self.board["spaces"][house]["owner"]]
-                elif self.board[house]["type"] == "railroad_property":
-                    railroad_dict = {1: 25, 2: 50, 3: 100, 4: 200}
-                    debt = [railroad_dict[self.board["spaces"][house]
-                                          ["owner"].properties["railroad_properties"]], self.board["spaces"][house]["owner"]]
-                embed_landing.description += "\nYou must pay {} to {}".format(debt[0], debt[1])
+                if house_dict["type"] == "color_property":
+                    debt = [house_dict["rent"]
+                            [house_dict["house_level"]], house_dict["owner"]]
+                elif house_dict["type"] == "service_property":
+                    debt = [
+                        sum(dice) * 6 * house_dict["house_level"] - 2, house_dict["owner"]]
+                elif house_dict["type"] == "railroad_property":
+                    debt = [house_dict["rent"]
+                            [house_dict["house_level"]], house_dict["owner"]]
+                embed_landing.description += "\nYou must pay {} to {}".format(
+                    debt[0], str(self.order[debt[1]].user))
 
         # TODO
-        elif self.board["spaces"][house]["type"] == "lucky_card0":
+        elif house_dict["type"] == "lucky_card0":
             pass
 
         # TODO
-        elif self.board["spaces"][house]["type"] == "lucky_card1":
+        elif house_dict["type"] == "lucky_card1":
             pass
 
         # TODO
-        elif self.board["spaces"][house]["type"] == "tax":
-            pass
+        elif house_dict["type"] == "tax":
+            debt = [house_dict["cost"], None]
+            embed_landing.description += "\nYou must pay {} to the bank".format(
+                debt[0])
 
         return {"doubles": doubles, "debt": debt, "buy_property": buy_property, "auction_property": auction_property, "embed": embed_landing, "dice": dice}
 
     async def routine_checks(self, playing, house) -> None:
         if self.choice == "board":
-            embed_board = discord.Embed(color=self.board["spaces"][house]["color_int"], timestamp=datetime.datetime.now())
-            embed_board.set_author(name="Monopoly Board", icon_url="https://cdn.discordapp.com/avatars/703970013366845470/e87b7deba6b38e852e6295beed200d37.webp?size=1024")
-            embed_board.set_image(url="https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/monopoly_board.jpg")
-            for space in self.board["spaces"]:
-                if space["type"] == "start":
-                    embed_board.description = "{} **{}**".format(space["name"])
-                elif space["type"] == "color_property":
-                    if space["owner"] == None:
-                        embed_board.description = "{} **{}** ({})\nOwner:{}".format(self.emojis[space["color"]], space["name"], space["cost"], space["owner"])
-                    else:
-                        embed_board.description = "{} **{}** ({})\nOwner:{} | Rent: {} ".format(self.emojis[space["color"]], space["name"], space["cost"], space["owner"], space["rent"][space["house_level"]])
-                        for house in range(space["house_level"]):
-                            embed_board.description += str(self.emojis["properties"])
-                elif space["type"] == "railroad_property":
-                    if space["owner"] == None:
-                        embed_board.description = "{} **{}** ({})\nOwner:{}".format(self.emojis["railroad_property"], space["name"], space["cost"], space["owner"])
-                    else:
-                        railroad_dict = {1: 25, 2: 50, 3: 100, 4: 200}
-                        # TODO: FIX THIS
-                        embed_board.description = "{} **{}** ({})\nOwner:{} | Rent: {} ".format(self.emojis[space["color"]], space["name"], space["cost"], space["owner"])
-                elif space["type"] == "service_property":
-                    pass
-                elif space["type"] == "tax":
-                    pass
-                elif space["type"] == "luck_card0":
-                    pass
-                elif space["type"] == "luck_card1":
-                    pass
-                elif space["type"] == "jail":
-                    pass
-                elif space["type"] == "jailing":
-                    pass
-                elif space["type"] == "free_space":
-                    pass
-            await self.channel.send(embed=embed_board)
+            embed_board = discord.Embed(
+                color=self.board["spaces"][house]["color_int"], timestamp=datetime.datetime.now())
+            embed_board.set_author(
+                name="Monopoly Board", icon_url="https://cdn.discordapp.com/avatars/703970013366845470/e87b7deba6b38e852e6295beed200d37.webp?size=1024")
+
+            start = 0
+            end = 10
+            for x in range(4):
+                # Iterate over every space
+                for space in self.board["spaces"][start:end]:
+                    # Start
+                    if space["type"] == "start":
+                        embed_board.description = "{emoji} **{name}**".format(
+                            emoji=self.emojis["go"], name=space["name"])
+                    # Color_Property
+                    elif space["type"] == "color_property":
+                        try:
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)\nOwner:{owner}".format(
+                                emoji=self.emojis[space["color"]], name=space["name"], cost=space["cost"], owner=str(self.order[space["owner"]].user), rent=space["rent"][space["house_level"]])
+                            if space["house_level"] != 5:
+                                for house in range(space["house_level"]):
+                                    embed_board.description += str(
+                                        self.emojis["properties"])
+                            else:
+                                embed_board.description += str(
+                                    self.emojis["hotel"])
+                        except TypeError:
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                emoji=self.emojis[space["color"]], name=space["name"], cost=space["cost"])
+                    # Railroad_Property
+                    elif space["type"] == "railroad_property":
+                        try:
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)\nOwner:{owner} | Rent: {rent}$".format(
+                                emoji=self.emojis["railroad_property"], name=space["name"], cost=space["cost"], owner=str(self.order[space["owner"]].user), rent=space["rent"][space["house_level"]])
+                        except TypeError:
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                emoji=self.emojis["railroad_property"], name=space["name"], cost=space["cost"])
+                    # Service_Property
+                    elif space["type"] == "service_property":
+                        if space["name"] == "Eletric Company":
+                            try:
+                                embed_board.description += "\n{emoji} **{name}** ({cost}$)\nOwner:{owner} | Rent: {rent} * Number on Dice".format(
+                                    emoji=self.emojis["railroad_property"], name=space["name"], cost=space["cost"], owner=str(self.order[space["owner"]].user), rent=6 * space["house_level"] - 2)
+                            except TypeError:
+                                embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                    emoji=self.emojis["electric_company"], name=space["name"], cost=space["cost"])
+                        else:
+                            try:
+                                embed_board.description += "\n{emoji} **{name}** ({cost}$)\nOwner:{owner} | Rent: {rent} * Number on Dice".format(
+                                    emoji=self.emojis["railroad_property"], name=space["name"], cost=space["cost"], owner=str(self.order[space["owner"]].user), rent=6 * space["house_level"] - 2)
+                            except TypeError:
+                                embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                    emoji=self.emojis["water_works"], name=space["name"], cost=space["cost"])
+                    # Tax
+                    elif space["type"] == "tax":
+                        # TODO: ADD TAX EMOJI
+                        if space["name"] == "Luxury Tax":
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                emoji=self.emojis["luxury_tax"], name=space["name"], cost=space["cost"])
+                        else:
+                            embed_board.description += "\n{emoji} **{name}** ({cost}$)".format(
+                                emoji=self.emojis["pintelho"], name=space["name"], cost=space["cost"])
+                    # Chance (luck_card0)
+                    elif space["type"] == "luck_card0":
+                        embed_board.description += "\n{emoji} **{name}**".format(
+                            emoji=self.emojis["luck_card0"], name=space["name"])
+                    # Comunity Chets (luck_card1)
+                    elif space["type"] == "luck_card1":
+                        embed_board.description += "\n{emoji} **{name}**".format(
+                            emoji=self.emojis["luck_card1"], name=space["name"])
+                    # Jail
+                    elif space["type"] == "jail":
+                        embed_board.description += "\n{emoji} **{name}**\nJailed: ".format(
+                            emoji=self.emojis["brazil"], name=space["name"])
+                        for priosner in space["jailed"]:
+                            embed_board.description += str(
+                                self.order[priosner])
+                    # Go to jail
+                    elif space["type"] == "jailing":
+                        embed_board.description += "\n{emoji} **{name}**".format(
+                            emoji=self.emojis["go_to_brazil"], name=space["name"])
+                    # Free Parking
+                    elif space["type"] == "free_space":
+                        embed_board.description += "\n{emoji} **{name}**".format(
+                            emoji=self.emojis["parking"], name=space["name"])
+
+                    if space["here"] != None:
+                        for player in space["here"]:
+                            embed_board.description += "\n{}".format(
+                                self.order[player][0].user.mention)
+
+                    embed_board.description += "\n"
+
+                if x == 3:
+                    embed_board.set_image(
+                        url="https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg")
+                await self.channel.send(embed=embed_board)
+                embed_board = discord.Embed(
+                    color=self.board["spaces"][house]["color_int"], timestamp=datetime.datetime.now())
+                embed_board.set_author(
+                    name="Monopoly Board", icon_url="https://cdn.discordapp.com/avatars/703970013366845470/e87b7deba6b38e852e6295beed200d37.webp?size=1024")
+                embed_board.description = ""
+                if x == 3:
+                    embed_board.set_image(
+                        url="https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg")
+                start += 10
+                end += 10
 
         # TODO
         elif self.choice == "properties":
@@ -256,19 +339,25 @@ class Monopoly:
         elif self.choice == "bankruptcy":
             pass
 
-    async def finish_turn(self) -> None:
+    async def finish_turn(self, house: int) -> None:
         # TODO
         if self.choice == "pay_debt":
             pass
 
         # TODO
         elif self.choice == "buy_property":
-            pass
+            house_dict = self.board["spaces"][house]
+            if house_dict["type"] == "color_property":
+                pass
+            elif house_dict["type"] == "service_property":
+                pass
+            elif house_dict["type"] == "railroad_propert":
+                pass
 
         # TODO
         elif self.choice == "auction_property":
             pass
-        
+
         # TODO
         else:
             return
@@ -291,8 +380,9 @@ class Monopoly:
                             key=lambda x: x[1], reverse=True)
         order_copy = copy.copy(self.order)
         self.order = []
-        for player in order_copy:
+        for count, player in enumerate(order_copy):
             self.order.append([player[0], 0])
+            self.board["spaces"][0]["here"].append(count)
 
         # Send the game order embed
         embed_order = discord.Embed(
@@ -331,9 +421,11 @@ class Monopoly:
             message_turn = await self.channel.send(embed=embed_turn)
             # This block is in a gather function to detect possible reaction adds
             # while the bot adds all the possibilites
-            self.valid_reactions = ["dice", "board", "properties", "trade", "bankruptcy"]
+            self.valid_reactions = ["dice", "board",
+                                    "properties", "trade", "bankruptcy"]
             await asyncio.gather(
-                self.add_reactions_message(message_turn, ["dice", "board", "properties", "trade", "bankruptcy"]),
+                self.add_reactions_message(
+                    message_turn, ["dice", "board", "properties", "trade", "bankruptcy"]),
                 self.bot.wait_for("reaction_add", check=self.check_reaction)
             )
             self.valid_reactions.clear()
@@ -342,6 +434,7 @@ class Monopoly:
                 info_end_turn = await self.moving_on_board(
                     playing, house, doubles, True)
                 doubles = info_end_turn["doubles"]
+                house = self.order[self.pointer][1]
 
                 while not(self.choice in ["debt", "buy_property", "auction_property", "nothing"]):
                     message_end_turn = await self.channel.send(embed=info_end_turn["embed"])
@@ -358,8 +451,10 @@ class Monopoly:
 
                     self.valid_reactions = reactions
                     await asyncio.gather(
-                        self.add_reactions_message(message_end_turn, reactions),
-                        self.bot.wait_for("reaction_add", check=self.check_reaction)
+                        self.add_reactions_message(
+                            message_end_turn, reactions),
+                        self.bot.wait_for(
+                            "reaction_add", check=self.check_reaction)
                     )
                     self.valid_reactions.clear()
 
@@ -367,7 +462,7 @@ class Monopoly:
                         await self.routine_checks(playing, house)
 
                     elif self.choice in reactions:
-                        self.finish_turn()
+                        self.finish_turn(house)
                 else:
                     if doubles != 0 and info_end_turn["dice"][0] == info_end_turn["dice"][1]:
                         continue
