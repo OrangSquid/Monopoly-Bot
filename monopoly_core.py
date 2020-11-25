@@ -1,12 +1,11 @@
-import random
-import discord
-import datetime
-import copy
 import asyncio
+import copy
+import datetime
 import json
-from typing import *
+import random
+from typing import Any, Dict, List
 
-from discord import emoji
+import discord
 
 # TODO: ADD HOUSE LEVEL REFERENCE TO RAILROAD PROPERTIES AND SERVICE PROPERTIES
 
@@ -120,7 +119,8 @@ class Monopoly:
     def str_embed_properties(self, property):
         # Color_Property
         if self.board["spaces"][property]["type"] == "color_property":
-            rent = self.board["spaces"][property]["rent"][self.board["spaces"][property]["house_level"]]
+            rent = self.board["spaces"][property]["rent"][self.board["spaces"]
+                                                          [property]["house_level"]]
             if self.board["spaces"][property]["monopoly"] and self.board["spaces"][property]["house_level"] == 0:
                 rent *= 2
             str_to_return = "\n{emoji} **{name}** ({cost}$)\nRent: {rent}$".format(
@@ -361,28 +361,37 @@ class Monopoly:
                 house_dict = self.board["spaces"][property]
                 if house_dict["type"] == "color_property":
                     try:
-                        embed_properties_dict[house_dict["color"]] += self.str_embed_properties(property)
+                        embed_properties_dict[house_dict["color"]
+                                              ] += self.str_embed_properties(property)
                     # monopolies.append() is in the except block because it only happens once
                     except KeyError:
-                        embed_properties_dict[house_dict["color"]] = self.str_embed_properties(property)
+                        embed_properties_dict[house_dict["color"]
+                                              ] = self.str_embed_properties(property)
                         monopolies.append(house_dict["color"])
-                        color_int_dict[house_dict["color"]] = house_dict["color_int"]
+                        color_int_dict[house_dict["color"]
+                                       ] = house_dict["color_int"]
                 elif house_dict["type"] == "service_property":
                     try:
-                        embed_properties_dict[house_dict["service_property"]] += self.str_embed_properties(property)
+                        embed_properties_dict[house_dict["service_property"]
+                                              ] += self.str_embed_properties(property)
                     except KeyError:
-                        embed_properties_dict["service_property"] = self.str_embed_properties(property)
+                        embed_properties_dict["service_property"] = self.str_embed_properties(
+                            property)
                         color_int_dict["service_property"] = house_dict["color_int"]
                 elif house_dict["type"] == "railroad_property":
                     try:
-                        embed_properties_dict["railroad_property"] += self.str_embed_properties(property)
+                        embed_properties_dict["railroad_property"] += self.str_embed_properties(
+                            property)
                     except KeyError:
-                        embed_properties_dict["railroad_property"] = self.str_embed_properties(property)
+                        embed_properties_dict["railroad_property"] = self.str_embed_properties(
+                            property)
                         color_int_dict["railroad_property"] = house_dict["color_int"]
-            
+
             for property in zip(embed_properties_dict.keys(), embed_properties_dict.values()):
-                embed_property = discord.Embed(color=color_int_dict[property[0]], timestamp=datetime.datetime.now(), description=property[1])
-                embed_property.set_author(name="{} properties".format(self.order[self.pointer][0].user), icon_url=str(playing.avatar_url))
+                embed_property = discord.Embed(
+                    color=color_int_dict[property[0]], timestamp=datetime.datetime.now(), description=property[1])
+                embed_property.set_author(name="{} properties".format(
+                    self.order[self.pointer][0].user), icon_url=str(playing.avatar_url))
                 await self.channel.send(embed=embed_property)
 
         # TODO

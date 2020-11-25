@@ -1,10 +1,12 @@
-import logging
-import monopoly_core
-import discord
 import datetime
 import json
+import logging
+from typing import Any, Dict, List
+
+import discord
 from discord.ext import commands
-from typing import Dict, List, Any
+
+import monopoly_core
 
 # Setting up the logger function for the library
 logger = logging.getLogger('discord')
