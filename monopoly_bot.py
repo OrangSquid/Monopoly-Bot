@@ -136,16 +136,16 @@ async def stop(ctx):
         #    await ctx.send(":x: There are no games to stop")
 
 
-@monopoly_bot.group()
+'''@monopoly_bot.group()
 async def settings(ctx):
     if ctx.invoked_subcommand is None:
         await ctx.send(":x: Choose a setting! Please use =help to get a full list of settings")
 
 
-# async def change_settings(setting: str, to_change, guild_id: int):
-#    definitions[str(guild_id)][setting] = to_change
-#    with open("definitions.json", "w") as file:
-#        json.dump(definitions, file, indent="\t")
+async def change_settings(setting: str, to_change, guild_id: int):
+   definitions[str(guild_id)][setting] = to_change
+   with open("definitions.json", "w") as file:
+        json.dump(definitions, file, indent="\t")'''
 
 
 @monopoly_bot.event
