@@ -6,7 +6,7 @@
 			"type": "start",
 			"salary": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/go_Card_monopoly%20(1).png",
 			"here": []
 		},
 		{
@@ -24,18 +24,19 @@
 			],
 			"house_cost": 50,
 			"color_int": 8801336,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/brown.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [1, 3]
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
 			"here": []
 		},
 		{
@@ -53,19 +54,20 @@
 			],
 			"house_cost": 50,
 			"color_int": 8801336,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/brown.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [1, 3]
 		},
 		{
 			"name": "Income Tax",
 			"type": "tax",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/pintelho.png",
 			"here": []
 		},
 		{
@@ -73,11 +75,10 @@
 			"type": "railroad_property",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"rent": [
 				25,
 				50,
@@ -101,18 +102,19 @@
 			],
 			"house_cost": 50,
 			"color_int": 11328752,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [6, 8, 9]
 		},
 		{
 			"name": "Chance",
 			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
 			"here": []
 		},
 		{
@@ -130,12 +132,13 @@
 			],
 			"house_cost": 50,
 			"color_int": 11328752,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [6, 8, 9]
 		},
 		{
 			"name": "Light Blue Property 3",
@@ -152,18 +155,19 @@
 			],
 			"house_cost": 50,
 			"color_int": 11328752,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [6, 8, 9]
 		},
 		{
 			"name": "Jail",
 			"type": "jail",
 			"color_int": 15567909,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/in_brazil.png",
 			"jailed": [],
 			"here": []
 		},
@@ -182,23 +186,23 @@
 			],
 			"house_cost": 100,
 			"color_int": 12925060,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [11, 13, 14]
 		},
 		{
 			"name": "Eletric Company",
 			"type": "service_property",
 			"cost": 150,
 			"color_int": 16708355,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/elecricity_get_fucked.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"here": []
 		},
 		{
@@ -216,12 +220,13 @@
 			],
 			"house_cost": 100,
 			"color_int": 12925060,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [11, 13, 14]
 		},
 		{
 			"name": "Magenta Property 3",
@@ -238,23 +243,23 @@
 			],
 			"house_cost": 100,
 			"color_int": 12925060,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [11, 13, 14]
 		},
 		{
 			"name": "Railroad 2",
 			"type": "railroad_property",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"rent": [
 				25,
 				50,
@@ -278,18 +283,19 @@
 			],
 			"house_cost": 100,
 			"color_int": 15502124,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [16, 18, 19]
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
 			"here": []
 		},
 		{
@@ -307,12 +313,13 @@
 			],
 			"house_cost": 100,
 			"color_int": 15502124,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [16, 18, 19]
 		},
 		{
 			"name": "Orange Property 3",
@@ -329,18 +336,19 @@
 			],
 			"house_cost": 100,
 			"color_int": 15502124,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [16, 18, 19]
 		},
 		{
 			"name": "Free Parking",
 			"type": "free_space",
 			"color_int": 14362410,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/car_ded.png",
 			"here": []
 		},
 		{
@@ -358,18 +366,19 @@
 			],
 			"house_cost": 150,
 			"color_int": 14361640,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [21, 23, 24]
 		},
 		{
 			"name": "Chance",
 			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
 			"here": []
 		},
 		{
@@ -387,12 +396,13 @@
 			],
 			"house_cost": 150,
 			"color_int": 14361640,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [21, 23, 24]
 		},
 		{
 			"name": "Red Property 3",
@@ -409,23 +419,23 @@
 			],
 			"house_cost": 50,
 			"color_int": 14361640,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [21, 23, 24]
 		},
 		{
-			"name": "Railroad Property 3",
+			"name": "Railroad 3",
 			"type": "railroad_property",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"rent": [
 				25,
 				50,
@@ -449,12 +459,13 @@
 			],
 			"house_cost": 150,
 			"color_int": 16707591,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [26, 27, 29]
 		},
 		{
 			"name": "Yellow Property 2",
@@ -471,23 +482,23 @@
 			],
 			"house_cost": 150,
 			"color_int": 16707591,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [26, 27, 29]
 		},
 		{
 			"name": "Water Works",
 			"type": "service_property",
 			"cost": 150,
 			"color_int": 16776702,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/water_africa.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"here": []
 		},
 		{
@@ -505,18 +516,19 @@
 			],
 			"house_cost": 150,
 			"color_int": 16707591,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [26, 27, 29]
 		},
 		{
 			"name": "Go to Jail",
 			"type": "jailing",
 			"color_int": 27043,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/go_to_brazil.png",
 			"here": []
 		},
 		{
@@ -534,12 +546,13 @@
 			],
 			"house_cost": 200,
 			"color_int": 1288279,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [31, 32, 34]
 		},
 		{
 			"name": "Green Property 2",
@@ -556,18 +569,19 @@
 			],
 			"house_cost": 200,
 			"color_int": 1288279,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [31, 32, 34]
 		},
 		{
 			"name": "Community Chest",
 			"type": "luck_card1",
 			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
 			"here": []
 		},
 		{
@@ -584,24 +598,24 @@
 				1400
 			],
 			"house_cost": 200,
-			"color_int": 42459,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"color_int": 1288279,
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [31, 32, 34]
 		},
 		{
-			"name": "Railroad Property 4",
+			"name": "Railroad 4",
 			"type": "railroad_property",
 			"cost": 200,
 			"color_int": 1,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
 			"rent": [
 				25,
 				50,
@@ -614,7 +628,7 @@
 			"name": "Chance",
 			"type": "luck_card0",
 			"color_int": 14516021,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
 			"here": []
 		},
 		{
@@ -632,19 +646,20 @@
 			],
 			"house_cost": 200,
 			"color_int": 26276,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/dark%20blue.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [37, 39]
 		},
 		{
 			"name": "Luxury Tax",
 			"type": "tax",
 			"cost": 100,
 			"color_int": 16379444,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/luxury_tax.png",
 			"here": []
 		},
 		{
@@ -662,12 +677,13 @@
 			],
 			"house_cost": 200,
 			"color_int": 26276,
-			"image_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/dark%20blue.png",
 			"owner": null,
 			"mortgage": false,
 			"house_level": 0,
-			"space": null,
-			"here": []
+			"here": [],
+			"monopoly": false,
+			"color_group": [37, 39]
 		}
 	],
 	"luck_cards": [
