@@ -16,18 +16,21 @@
             "text": "Advance to Magenta 1. If you pass Go, collect $200"
         },
         {
-            "type": "teleport",
+            "type": "teleport_rent_mutiplier",
             "space": "service_property",
+            "multiplier": 10,
             "text": "Advance to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown."
         },
         {
-            "type": "teleport",
+            "type": "teleport_rent_multiplier",
             "space": "railroad_property",
+            "multiplier": 2,
             "text": "Advance to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
         },
         {
-            "type": "teleport",
+            "type": "teleport_rent_multiplier",
             "space": "railroad_property",
+            "multiplier": 2,
             "text": "Advance to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
         },
         {
@@ -40,7 +43,7 @@
             "text": "Go to Jail - Go directly to Jail - Do not pass Go, do not collect $200"
         },
         {
-            "type": "space_backward",
+            "type": "space_backwards",
             "spaces": 3,
             "text": "Go back 3 spaces"
         },

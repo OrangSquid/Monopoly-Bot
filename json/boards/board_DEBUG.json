@@ -1,10 +1,10 @@
 {
 	"board_name": "Original (Debug)",
+	"salary" : 200,
 	"spaces": [
 		{
 			"name": "GO",
-			"type": "start",
-			"salary": 200,
+			"type": "free_space",
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/go_Card_monopoly%20(1).png",
 			"emoji": "<:go:780206906018234439>"
