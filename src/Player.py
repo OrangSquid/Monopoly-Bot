@@ -1,27 +1,36 @@
-import discord
 from typing import Dict, List
-from .Spaces import MonopolyProperty, ServiceProperty, RailroadProperty, ColorProperty
+
+import discord
+
+from .Spaces import (MonopolyProperty, RailroadProperty,
+                     ServiceProperty, Space)
 
 
 class Player:
 
     def __init__(self, user: discord.User):
-        self.in_prison: bool = False
-        self.space: int = 0
+        self.in_prison: int = 0
+        self.space: Space = None
         # {'color\service\railroad': LIST OF OBJECT REFERENCES}
         self.properties: Dict[str, List[MonopolyProperty]] = dict()
         self.prison_free_pass: int = 0
         self.money: int = 1500
-        self._monopolies: List['str'] = []
+        self._monopolies: List['str'] = list()
         self.user: discord.User = user
         self.avatar_url: str = str(user.avatar_url)
 
     def add_property(self, monopoly_property: MonopolyProperty):
         if type(monopoly_property) == ServiceProperty:
-            self.properties['service'] += 1
+            property_type: str = 'service'
         elif type(monopoly_property) == RailroadProperty:
-            self.properties['railroad'] += 1
-        self.properties['properties'].append(monopoly_property)
+            property_type: str = 'railroad'
+        else:
+            property_type: str = monopoly_property.color
+            ammount_color_properties = len(monopoly_property.color_group)
+            player_color_properties = len(self.properties[property_type]) - 1
+            if ammount_color_properties == player_color_properties:
+                self._monopolies.append(property_type)
+        self.properties[property_type].append(monopoly_property)
 
     def properties_embed(self) -> Dict:
         properties_dict = {
