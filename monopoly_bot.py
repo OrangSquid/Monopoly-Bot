@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 import discord
 from discord.ext import commands
 
-import monopoly_core
+from src import monopoly_core
 
 # Setting up the logger function for the library
 logger = logging.getLogger('discord')

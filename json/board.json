@@ -7,7 +7,7 @@
 			"salary": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/go_Card_monopoly%20(1).png",
-			"here": []
+			"emoji": "<:go:780206906018234439>"
 		},
 		{
 			"name": "Brown Property 1",
@@ -25,19 +25,18 @@
 			"house_cost": 50,
 			"color_int": 8801336,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/brown.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [1, 3]
+			"color_group": [
+				1,
+				3
+			],
+			"emoji": "<:brown:780588672784269362>"
 		},
 		{
 			"name": "Community Chest",
-			"type": "luck_card1",
+			"type": "community_chest_card",
 			"color_int": 42459,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
-			"here": []
+			"emoji": "<:luck_card1:780206968454512660>"
 		},
 		{
 			"name": "Brown Property 2",
@@ -55,12 +54,11 @@
 			"house_cost": 50,
 			"color_int": 8801336,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/brown.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [1, 3]
+			"color_group": [
+				1,
+				3
+			],
+			"emoji": "<:brown:780588672784269362>"
 		},
 		{
 			"name": "Income Tax",
@@ -68,7 +66,7 @@
 			"cost": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/pintelho.png",
-			"here": []
+			"emoji": "<:pintelho:780591734509797406>"
 		},
 		{
 			"name": "Railroad 1",
@@ -76,16 +74,13 @@
 			"cost": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
 			"rent": [
 				25,
 				50,
 				100,
 				200
 			],
-			"here": []
+			"emoji": "<:railroad_property:780207296734691338>"
 		},
 		{
 			"name": "Light Blue Property 1",
@@ -103,19 +98,19 @@
 			"house_cost": 50,
 			"color_int": 11328752,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [6, 8, 9]
+			"color_group": [
+				6,
+				8,
+				9
+			],
+			"emoji": "<:light_blue:780591310733836338>"
 		},
 		{
 			"name": "Chance",
-			"type": "luck_card0",
-			"color_int": 14516021,
-			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
-			"here": []
+			"type": "chance_card",
+			"color_int": 14485640,
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_pink.png",
+			"emoji": "<:surprise_pink:781294111411798038>"
 		},
 		{
 			"name": "Light Blue Property 2",
@@ -133,12 +128,12 @@
 			"house_cost": 50,
 			"color_int": 11328752,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [6, 8, 9]
+			"color_group": [
+				6,
+				8,
+				9
+			],
+			"emoji": "<:light_blue:780591310733836338>"
 		},
 		{
 			"name": "Light Blue Property 3",
@@ -156,12 +151,12 @@
 			"house_cost": 50,
 			"color_int": 11328752,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/light%20blue.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [6, 8, 9]
+			"color_group": [
+				6,
+				8,
+				9
+			],
+			"emoji": "<:light_blue:780591310733836338>"
 		},
 		{
 			"name": "Jail",
@@ -169,7 +164,7 @@
 			"color_int": 15567909,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/in_brazil.png",
 			"jailed": [],
-			"here": []
+			"emoji": "<:brazil:780207221900050445>"
 		},
 		{
 			"name": "Magenta Property 1",
@@ -187,23 +182,24 @@
 			"house_cost": 100,
 			"color_int": 12925060,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [11, 13, 14]
+			"color_group": [
+				11,
+				13,
+				14
+			],
+			"emoji": "<:magenta:780591330706325564>"
 		},
 		{
 			"name": "Eletric Company",
 			"type": "service_property",
 			"cost": 150,
+			"rent": [
+				4,
+				10
+			],
 			"color_int": 16708355,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/elecricity_get_fucked.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": []
+			"emoji": "<:electric_company:780207062473900082>"
 		},
 		{
 			"name": "Magenta Property 2",
@@ -221,12 +217,12 @@
 			"house_cost": 100,
 			"color_int": 12925060,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [11, 13, 14]
+			"color_group": [
+				11,
+				13,
+				14
+			],
+			"emoji": "<:magenta:780591330706325564>"
 		},
 		{
 			"name": "Magenta Property 3",
@@ -244,12 +240,12 @@
 			"house_cost": 100,
 			"color_int": 12925060,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/magenta.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [11, 13, 14]
+			"color_group": [
+				11,
+				13,
+				14
+			],
+			"emoji": "<:magenta:780591330706325564>"
 		},
 		{
 			"name": "Railroad 2",
@@ -257,16 +253,13 @@
 			"cost": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
 			"rent": [
 				25,
 				50,
 				100,
 				200
 			],
-			"here": []
+			"emoji": "<:railroad_property:780207296734691338>"
 		},
 		{
 			"name": "Orange Property 1",
@@ -284,19 +277,19 @@
 			"house_cost": 100,
 			"color_int": 15502124,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [16, 18, 19]
+			"color_group": [
+				16,
+				18,
+				19
+			],
+			"emoji": "<:orange:780591343189753876>"
 		},
 		{
 			"name": "Community Chest",
-			"type": "luck_card1",
+			"type": "community_chest_card",
 			"color_int": 42459,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
-			"here": []
+			"emoji": "<:luck_card1:780206968454512660>"
 		},
 		{
 			"name": "Orange Property 2",
@@ -314,12 +307,12 @@
 			"house_cost": 100,
 			"color_int": 15502124,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [16, 18, 19]
+			"color_group": [
+				16,
+				18,
+				19
+			],
+			"emoji": "<:orange:780591343189753876>"
 		},
 		{
 			"name": "Orange Property 3",
@@ -337,19 +330,19 @@
 			"house_cost": 100,
 			"color_int": 15502124,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/orange.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [16, 18, 19]
+			"color_group": [
+				16,
+				18,
+				19
+			],
+			"emoji": "<:orange:780591343189753876>"
 		},
 		{
 			"name": "Free Parking",
 			"type": "free_space",
 			"color_int": 14362410,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/car_ded.png",
-			"here": []
+			"emoji": "<:parking:780207243006050315>"
 		},
 		{
 			"name": "Red Property 1",
@@ -367,19 +360,19 @@
 			"house_cost": 150,
 			"color_int": 14361640,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [21, 23, 24]
+			"color_group": [
+				21,
+				23,
+				24
+			],
+			"emoji": "<:red:780195154215567383>"
 		},
 		{
 			"name": "Chance",
-			"type": "luck_card0",
-			"color_int": 14516021,
-			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
-			"here": []
+			"type": "chance_card",
+			"color_int": 1160437,
+			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_blue.png",
+			"emoji": "<:surprise_blue:781294096857563186>"
 		},
 		{
 			"name": "Red Property 2",
@@ -397,12 +390,12 @@
 			"house_cost": 150,
 			"color_int": 14361640,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [21, 23, 24]
+			"color_group": [
+				21,
+				23,
+				24
+			],
+			"emoji": "<:red:780195154215567383>"
 		},
 		{
 			"name": "Red Property 3",
@@ -420,12 +413,12 @@
 			"house_cost": 50,
 			"color_int": 14361640,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/red.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [21, 23, 24]
+			"color_group": [
+				21,
+				23,
+				24
+			],
+			"emoji": "<:red:780195154215567383>"
 		},
 		{
 			"name": "Railroad 3",
@@ -433,16 +426,13 @@
 			"cost": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
 			"rent": [
 				25,
 				50,
 				100,
 				200
 			],
-			"here": []
+			"emoji": "<:railroad_property:780207296734691338>"
 		},
 		{
 			"name": "Yellow Property 1",
@@ -460,12 +450,12 @@
 			"house_cost": 150,
 			"color_int": 16707591,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [26, 27, 29]
+			"color_group": [
+				26,
+				27,
+				29
+			],
+			"emoji": "<:yellow:780591362457731086>"
 		},
 		{
 			"name": "Yellow Property 2",
@@ -483,23 +473,24 @@
 			"house_cost": 150,
 			"color_int": 16707591,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [26, 27, 29]
+			"color_group": [
+				26,
+				27,
+				29
+			],
+			"emoji": "<:yellow:780591362457731086>"
 		},
 		{
 			"name": "Water Works",
 			"type": "service_property",
 			"cost": 150,
+			"rent": [
+				4,
+				10
+			],
 			"color_int": 16776702,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/water_africa.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": []
+			"emoji": "<:water_works:780207128807735347>"
 		},
 		{
 			"name": "Yellow Property 3",
@@ -517,19 +508,19 @@
 			"house_cost": 150,
 			"color_int": 16707591,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/yellow.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [26, 27, 29]
+			"color_group": [
+				26,
+				27,
+				29
+			],
+			"emoji": "<:yellow:780591362457731086>"
 		},
 		{
 			"name": "Go to Jail",
 			"type": "jailing",
 			"color_int": 27043,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/go_to_brazil.png",
-			"here": []
+			"emoji": "<:go_to_brazil:780207166363533313>"
 		},
 		{
 			"name": "Green Property 1",
@@ -547,12 +538,12 @@
 			"house_cost": 200,
 			"color_int": 1288279,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [31, 32, 34]
+			"color_group": [
+				31,
+				32,
+				34
+			],
+			"emoji": "<:green:780591373349814302>"
 		},
 		{
 			"name": "Green Property 2",
@@ -570,19 +561,19 @@
 			"house_cost": 200,
 			"color_int": 1288279,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [31, 32, 34]
+			"color_group": [
+				31,
+				32,
+				34
+			],
+			"emoji": "<:green:780591373349814302>"
 		},
 		{
 			"name": "Community Chest",
-			"type": "luck_card1",
+			"type": "community_chest_card1",
 			"color_int": 42459,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
-			"here": []
+			"emoji": "<:luck_card1:780206968454512660>"
 		},
 		{
 			"name": "Green Property 3",
@@ -600,12 +591,12 @@
 			"house_cost": 200,
 			"color_int": 1288279,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/green.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [31, 32, 34]
+			"color_group": [
+				31,
+				32,
+				34
+			],
+			"emoji": "<:green:780591373349814302>"
 		},
 		{
 			"name": "Railroad 4",
@@ -613,23 +604,20 @@
 			"cost": 200,
 			"color_int": 1,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/chu_chu_train.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
 			"rent": [
 				25,
 				50,
 				100,
 				200
 			],
-			"here": []
+			"emoji": "<:railroad_property:780207296734691338>"
 		},
 		{
 			"name": "Chance",
-			"type": "luck_card0",
+			"type": "chance_card",
 			"color_int": 14516021,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/surprise_orange.png",
-			"here": []
+			"emoji": "<:surprise_orange:780207006187257877>"
 		},
 		{
 			"name": "Dark Blue Property 1",
@@ -647,12 +635,11 @@
 			"house_cost": 200,
 			"color_int": 26276,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/dark%20blue.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [37, 39]
+			"color_group": [
+				37,
+				39
+			],
+			"emoji": "<:dark_blue:780591385224937482>"
 		},
 		{
 			"name": "Luxury Tax",
@@ -660,7 +647,7 @@
 			"cost": 100,
 			"color_int": 16379444,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/luxury_tax.png",
-			"here": []
+			"emoji": "<:luxury_tax:780592472387747842>"
 		},
 		{
 			"name": "Dark Blue Property 2",
@@ -678,177 +665,11 @@
 			"house_cost": 200,
 			"color_int": 26276,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/dark%20blue.png",
-			"owner": null,
-			"mortgage": false,
-			"house_level": 0,
-			"here": [],
-			"monopoly": false,
-			"color_group": [37, 39]
+			"color_group": [
+				37,
+				39
+			],
+			"emoji": "<:dark_blue:780591385224937482>"
 		}
-	],
-	"luck_cards": [
-		[
-			{
-				"type": "teleport",
-				"space": 0,
-				"text": "Advance to Go (Collect $200)"
-			},
-			{
-				"type": "teleport",
-				"space": 24,
-				"text": "Advance to Red 3. If you pass Go, collect $200"
-			},
-			{
-				"type": "teleport",
-				"space": 11,
-				"text": "Advance to Magenta 1. If you pass Go, collect $200"
-			},
-			{
-				"type": "teleport",
-				"space": "service_property",
-				"text": "Advance to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown."
-			},
-			{
-				"type": "teleport",
-				"space": "railroad_property",
-				"text": "Advance to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
-			},
-			{
-				"type": "teleport",
-				"space": "railroad_property",
-				"text": "Advance to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
-			},
-			{
-				"type": "give_money",
-				"money": 50,
-				"text": "Bank pays you dividend of $50"
-			},
-			{
-				"type": "jailing",
-				"text": "Go to Jail - Go directly to Jail - Do not pass Go, do not collect $200"
-			},
-			{
-				"type": "space_backward",
-				"spaces": 3,
-				"text": "Go back 3 spaces"
-			},
-			{
-				"type": "house_repair",
-				"money": [
-					25,
-					100
-				],
-				"text": "Make general repairs on all your property - For each house pay $25 - For each hotel $100"
-			},
-			{
-				"type": "pay_money",
-				"money": 15,
-				"text": "Pay poor tax of $15"
-			},
-			{
-				"type": "teleport",
-				"space": 5,
-				"text": "Take a trip to Railroad Property 1, if you pass Go, collect $200"
-			},
-			{
-				"type": "teleport",
-				"space": 39,
-				"text": "Advance to Blue 2"
-			},
-			{
-				"type": "pay_money_players",
-				"money": 50,
-				"text": "You have been elected Chairman of the Board - Pay each player $50"
-			},
-			{
-				"type": "give_money",
-				"money": 150,
-				"text": "Your building loan matures - Collect $150"
-			}
-		],
-		[
-			{
-				"type": "teleport",
-				"space": 0,
-				"text": "Advance to Go (Collect $200)"
-			},
-			{
-				"type": "give_money",
-				"money": 200,
-				"text": "Bank error in your favor - Collect $200"
-			},
-			{
-				"type": "pay_money",
-				"money": 50,
-				"text": "Doctor's fees - Pay $50"
-			},
-			{
-				"type": "give_money",
-				"money": 50,
-				"text": "From sale of stock you get $50"
-			},
-			{
-				"type": "jailing",
-				"text": "Go to Jail - Go directly to Jail - Do not pass Go, do not collect $200"
-			},
-			{
-				"type": "give_money_players",
-				"money": 50,
-				"text": "Grand Opera Night - Collect $50 from every player for opening night seats"
-			},
-			{
-				"type": "give_money",
-				"money": 100,
-				"text": "Holiday Fund matures - Receive $100"
-			},
-			{
-				"type": "give_money",
-				"money": 20,
-				"text": "Income tax refund - Receive $20"
-			},
-			{
-				"type": "give_money_players",
-				"money": 10,
-				"text": "It's your birthday - Collect $10 from every player."
-			},
-			{
-				"type": "give_money",
-				"money": 100,
-				"text": "Life insurance matures - Collect $100"
-			},
-			{
-				"type": "pay_money",
-				"money": 100,
-				"text": "Pay hospital fees of $100"
-			},
-			{
-				"type": "pay_money",
-				"money": 150,
-				"text": "Pay school fees of $150"
-			},
-			{
-				"type": "give_money",
-				"money": 25,
-				"text": "Life insurance matures - Collect $100"
-			},
-			{
-				"type": "house_repair",
-				"money": [
-					40,
-					115
-				],
-				"text": "You are assessed for street repairs - $40 per house - $115 per hotel"
-			},
-			{
-				"type": "give_money",
-				"money": 10,
-				"text": "You have won second prize in a beauty contest - Collect $10"
-			},
-			{
-				"type": "give_money",
-				"money": 100,
-				"text": "You have won second prize in a beauty contest - Collect $10"
-			}
-		]
 	]
 }
