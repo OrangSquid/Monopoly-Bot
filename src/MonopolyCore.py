@@ -3,7 +3,7 @@ import datetime
 import json
 import random
 from random import choice
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Callable
 
 import discord
 from discord.ext import commands
@@ -26,7 +26,6 @@ DICE_EMOJI = {
 with open('json/embeds.json', 'r') as file:
     global EMBEDS_GLOBAL
     EMBEDS_GLOBAL = json.load(file)
-
 
 class Monopoly:
     """
@@ -81,10 +80,13 @@ class Monopoly:
         else:
             return False
 
-    async def pay_rent(self, rent=None, trade=None):
+    async def pay_rent(self, space):
         pass
 
     async def trade(self, trade=None):
+        pass
+
+    async def buy_property(self, space):
         pass
 
     async def roll_dice(self, announce: bool) -> Tuple[int]:
@@ -101,6 +103,19 @@ class Monopoly:
             await self.channel.send('{} {}'.format(DICE_EMOJI[f'Dice{dice1}'],
                                                    DICE_EMOJI[f'Dice{dice2}']))
         return dice1, dice2
+    
+    async def check_board(self):
+        for embed in self.board.board_embeds():
+            embed = discord.Embed.from_dict(embed)
+            await self.channel.send(embed=embed)
+    
+    async def check_properties(self, playing: Player):
+        for embed in playing.properties_embed():
+            embed = discord.Embed.from_dict(embed)
+            await self.channel.send(embed=embed)
+
+    async def declare_bakrunptcy(self):
+        pass
 
     async def player_turn(self, playing, dice=[0, 0]) -> Dict:
         """
@@ -188,9 +203,7 @@ class Monopoly:
 
         elif issubclass(type(space), Jailing):
             self.board.move_on_board(playing, jailing=True)
-            embed_landing.description += '\nYou\'re going to Jail'
-
-        
+            embed_landing.description += '\nYou\'re going to Jail'        
 
     async def prisoner_turn(self, playing):
         """
@@ -224,34 +237,6 @@ class Monopoly:
         embed_prisoner.timestamp = datetime.datetime.now()
         embed_prisoner.set_thumbnail(
             url=self.board[10].image_url)
-
-    # THERE'S STILL STUFF TO DO IN HERE
-    async def routine_checks(self, playing) -> None:
-        """
-        Routine_checks can be called at the end or beginning of a turn
-
-        It lets the player check the board, their properties, trade and
-        declare bankruptcy
-        """
-        # Show Board
-        if self.choice == 'board':
-            for embed in self.board.board_embeds():
-                embed = discord.Embed.from_dict(embed)
-                await self.channel.send(embed=embed)
-
-        # Show Player Properties
-        elif self.choice == 'properties':
-            for embed in playing.properties_embed():
-                embed = discord.Embed.from_dict(embed)
-                await self.channel.send(embed=embed)
-
-        # TODO
-        elif self.choice == 'trade':
-            pass
-
-        # TODO
-        elif self.choice == 'bankruptcy':
-            pass
 
     async def choice_to_end(self):
         pass
@@ -388,20 +373,22 @@ class Monopoly:
             )
             self.valid_reactions.clear()
 
-            if self.choice == 'dice' and playing.in_prison >= 1:
-                await self.prisoner_turn(playing)
-
-            elif self.choice == 'dice' and playing.in_prison == 0:
-                await self.player_turn(playing)
-
-            elif self.choice == 'prison_break':
-                space.release_prison(playing, 'prison_break')
-
-            elif self.choice == 'use_prison_pass':
-                space.release_prisoner(playing, 'use_prison_pass')
-
-            else:
-                await self.routine_checks(playing)
+            self.CHOICE_SWICTHER[self.choice]()
         
         await self.channel.send('The game has ended')
         await self.channel.send(f'{self[0]} is the winner')
+
+    CHOICE_SWICTHER: Dict[str, Callable] = {
+        'dice': player_turn,
+        'dice_prison': prisoner_turn,
+        'board': check_board,
+        'properties': check_properties,
+        'trade': trade,
+        'buy_property': buy_property,
+        'bankruptcy': bankruptcy,
+        'auction_property': auction_property,
+        'nothing': nothing,
+        'pay_debt': pay_debt,
+        'use_prison_pass': use_prison_pass,
+        'prison_break': prison_break
+    }
