@@ -120,10 +120,7 @@ class Board:
         player.space.here.remove(player)
         # Going to jail
         if jailing:
-            jail_space = self[10]
-            player.space = jail_space
-            player.in_prison = 3
-            jail_space.jailed.append(player)
+            self[10].lock_prisoner(player)
         # Rolled dice
         elif dice is not None:
             landing_index = index + dice

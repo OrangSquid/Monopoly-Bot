@@ -15,7 +15,7 @@ class Player:
         self.properties: Dict[str, List[MonopolyProperty]] = dict()
         self.prison_free_pass: int = 0
         self.money: int = 1500
-        self._monopolies: List['str'] = list()
+        self.monopolies: List['str'] = list()
         self.user: discord.User = user
         self.avatar_url: str = str(user.avatar_url)
 
@@ -31,7 +31,7 @@ class Player:
                 ammount_color_properties = len(monopoly_property.color_group)
                 player_color_properties = len(self.properties[property_type]) - 1
                 if ammount_color_properties == player_color_properties:
-                    self._monopolies.append(property_type)
+                    self.monopolies.append(property_type)
 
         if property_type in self.properties.keys():
             self.properties[property_type].append(monopoly_property)
@@ -39,10 +39,6 @@ class Player:
             self.properties[property_type] = [monopoly_property]
 
     def properties_embed(self) -> Dict:
-        properties_dict = {
-            'embeds': [],
-            'monopolies': self._monopolies
-        }
         for properties_list in self.properties.values():
             embed = {
                 'description': '',
@@ -54,6 +50,5 @@ class Player:
             }
             for monopoly_property in properties_list:
                 embed['description'] += str(monopoly_property)
-            properties_dict['embeds'].append(embed)
-        
-        return properties_dict
+            
+            yield embed

@@ -88,7 +88,13 @@ class Jail(Space):
         elif means == 'prison_free_pass':
             prisoner.prison_free_pass -= 1
         self.jailed.remove(prisoner)
+        self.here.append(prisoner)
         prisoner.in_prison = 0
+    
+    def lock_prisoner(self, prisoner: Player):
+        prisoner.space = self
+        prisoner.in_prison = 3
+        self.jailed.append(prisoner)
 
 
 @dataclass
