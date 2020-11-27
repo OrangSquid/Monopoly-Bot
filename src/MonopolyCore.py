@@ -1,5 +1,4 @@
 import asyncio
-import copy
 import datetime
 import json
 import random
@@ -81,6 +80,12 @@ class Monopoly:
                     reaction.emoji)] in self.valid_reactions
         else:
             return False
+
+    async def pay_rent(self, rent=None, trade=None):
+        pass
+
+    async def trade(self, trade=None):
+        pass
 
     async def roll_dice(self, announce: bool) -> Tuple[int]:
         """
@@ -387,7 +392,7 @@ class Monopoly:
                 await self.prisoner_turn(playing)
 
             elif self.choice == 'dice' and playing.in_prison == 0:
-                await self.player_turn(playing, doubles)
+                await self.player_turn(playing)
 
             elif self.choice == 'prison_break':
                 space.release_prison(playing, 'prison_break')

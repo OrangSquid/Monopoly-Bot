@@ -31,6 +31,9 @@ class Space(object):
         players_here_mention += '\n\n'
 
         return embed_str, players_here_mention
+    
+    def event(self, playing: Player=None):
+        return ('nothing')
 
 
 @dataclass
@@ -63,6 +66,9 @@ class Tax(Space):
 
     def pay_rent(self) -> Tuple[Union[int, None]]:
         return self.cost, None
+    
+    def event(self, playing: Player=None):
+        return ('pay_debt')
 
 
 @dataclass
@@ -156,6 +162,9 @@ class MonopolyProperty(Space):
             embed_str += f' | **Rent:** {self.rent}'
         return embed_str, players_here_mention
 
+    def event(self):
+        pass
+
     def buy_property(self, buyer) -> None:
         self.owner = buyer
         buyer.add_property(self)
@@ -165,7 +174,6 @@ class MonopolyProperty(Space):
         Returns List of [money to pay, player who receives]
         """
         return self.rent * multiplier, self.owner
-
 
 class ServiceProperty(MonopolyProperty):
 
