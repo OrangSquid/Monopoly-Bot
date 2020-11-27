@@ -27,10 +27,8 @@ class Space(object):
         embed_str = f'{self.emoji} **{self.name}**'
         players_here_mention = str()
         for player in self.here:
-            players_here_mention += f'{player.user.mention}\n'
-
-        if players_here_mention == '':
-            players_here_mention = '\n'
+            players_here_mention += f'\n{player.user.mention} ({player.money}$)'
+        players_here_mention += '\n\n'
 
         return embed_str, players_here_mention
 
@@ -83,6 +81,14 @@ class Jail(Space):
             prisoners += f'{prisoner.user.mention}\n'
 
         return embed_str + players_here_mention + "Jailed:\n" + prisoners
+    
+    def release_prisoner(self, prisoner: Player, means: str):
+        if means == 'fine':
+            prisoner.money -= 50
+        elif means == 'prison_free_pass':
+            prisoner.prison_free_pass -= 1
+        self.jailed.remove(prisoner)
+        prisoner.in_prison = 0
 
 
 @dataclass
@@ -100,7 +106,9 @@ class Jailing(Space):
 
 @dataclass
 class LuckSpace(Space):
-    pass
+    def __str__(self) -> str:
+        embed_str, players_here_mention = super().__str__()
+        return embed_str + players_here_mention
 
 
 @dataclass
@@ -123,9 +131,10 @@ class MonopolyProperty(Space):
 
     def __init__(
         self, name: str, color_int: int, emoji: str,
-        index: int, cost: int, rent_list: List[int]
+        image_url: str, index: int, cost: int, 
+        rent_list: List[int]
     ) -> None:
-        super().__init__(name, color_int, emoji, index)
+        super().__init__(name, color_int, emoji, image_url, index)
         self.owner = None
         self.mortgage = False
         self.cost = cost
@@ -138,14 +147,14 @@ class MonopolyProperty(Space):
         embed_str += f' ({self.cost}$)'
         if self.owner is not None:
             embed_str += f'\n**Owner:** {str(self.owner.user)}'
-            embed_str += f' | **Rent:** {self.rent} '
+            embed_str += f' | **Rent:** {self.rent}'
         return embed_str, players_here_mention
 
     def buy_property(self, buyer) -> None:
         self.owner = buyer
         buyer.add_property(self)
 
-    def pay_rent(self, multiplier: int) -> Tuple[Union[int, Player]]:
+    def pay_rent(self, multiplier: int=1) -> Tuple[Union[int, Player]]:
         """
         Returns List of [money to pay, player who receives]
         """
@@ -156,12 +165,13 @@ class ServiceProperty(MonopolyProperty):
 
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
-        embed_str += '* Number on dice'
+        if self.owner is not None:
+            embed_str += ' * Number on dice'
         return embed_str + players_here_mention
 
     def buy_property(self, buyer) -> None:
         super().buy_property(buyer)
-        self._house_level = buyer.properties['service'] - 1
+        self._house_level = len(buyer.properties['service']) - 1
         self.rent = self._rent_list[self._house_level]
 
 
@@ -169,11 +179,11 @@ class RailroadProperty(MonopolyProperty):
 
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
-        return embed_str + players_here_mention
+        return embed_str + '$' + players_here_mention
 
     def buy_property(self, buyer) -> None:
         super().buy_property(buyer)
-        self._house_level = buyer.properties['railroad'] - 1
+        self._house_level = len(buyer.properties['railroad']) - 1
         self.rent = self._rent_list[self._house_level]
 
 
@@ -181,10 +191,10 @@ class ColorProperty(MonopolyProperty):
 
     def __init__(
         self, name: str, color_int: int, emoji: str,
-        index: int, cost: int, rent_list: List[int], color: str,
-        color_group: List[int], house_cost: int
+        image_url: str, index: int, cost: int, rent_list: List[int], 
+        color: str, color_group: List[int], house_cost: int
     ) -> None:
-        super().__init__(name, color_int, emoji, index, cost, rent_list)
+        super().__init__(name, color_int, emoji, image_url, index, cost, rent_list)
         self.color = color
         self.color_group = color_group
         self.house_cost = house_cost
@@ -192,11 +202,11 @@ class ColorProperty(MonopolyProperty):
 
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
+        embed_str += '$'
         if self._house_level == 5:
             embed_str += '<:hotel:780131003259027477>'
         else:
-            for x in range(self._house_level):
-                embed_str += '<:properties:780131015581761556>'
+            embed_str += '<:properties:780131015581761556>' * self._house_level
         return embed_str + players_here_mention
 
     def buy_property(self, buyer: Player) -> bool:

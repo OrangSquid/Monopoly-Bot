@@ -1,8 +1,11 @@
 {
     "turn": {
-        "description": "Money: {}$\n House: {}\n Prison Free Pass: {}\n 🎲 - Roll Dice\n <:monopoly_board:780128903012417536> - Check Board\n <:properties:780131015581761556> - Check your Properties\n <:thonkang:779326728858370078> - Trade\n 💸 - Declare bankruptcy"
+        "description": "Money: {money}$\n Space: {space}\n Prison Free Pass: {prison_free_pass}"
     },
     "landing": {
         "description": "You rolled a {dice1} {dice2} ({sum_dice})\nYou landed on {space}"
+    },
+    "prisoner": {
+        "description": "You rolled a {dice1} {dice2} ({sum_dice})"
     }
 }

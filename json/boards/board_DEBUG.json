@@ -365,7 +365,7 @@
 				23,
 				24
 			],
-			"emoji": "<:red:780195154215567383>"
+			"emoji": "<:red:780591352881610754>"
 		},
 		{
 			"name": "Chance",
@@ -570,7 +570,7 @@
 		},
 		{
 			"name": "Community Chest",
-			"type": "community_chest_card1",
+			"type": "community_chest_card",
 			"color_int": 42459,
 			"image_url": "https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/community_chest.png",
 			"emoji": "<:luck_card1:780206968454512660>"

@@ -20,55 +20,56 @@ space_type_to_class = {
 
 class Board:
 
-    def __init__(self, board_json):
+    def __init__(self, board_json: str):
         self._board_list: List[Space] = list()
-        with open('board_json', 'r') as file:
+        with open(board_json, 'r') as file:
             temp_board_dict = json.load(file)
         self.salary = temp_board_dict['salary']
-        for space in enumerate(temp_board_dict['spaces']):
+        for count, space in enumerate(temp_board_dict['spaces']):
             # Since jail, jailing, free_space, chance_card and
             # community_chest_card all share the same
             # implementation, this was done to reduce the
             # lines of code
             if space['type'] in ['jail', 'jailing', 'free_space', 'chance_card', 'community_chest_card']:
-                space_class = space_type_to_class[space[1]['type']](
-                    space['name'],
-                    space['color_int'],
-                    space['emoji'],
-                    space['image_url'],
-                    space[0]
+                space_class = space_type_to_class[space['type']](
+                    name=space['name'],
+                    color_int=space['color_int'],
+                    emoji=space['emoji'],
+                    image_url=space['image_url'],
+                    index=count
                 )
             # The same goes to service_property and railroad_property
             elif space['type'] in ['service_property', 'railroad_property']:
-                space_class = space_type_to_class[space[1]['type']](
-                    space['name'],
-                    space['color_int'],
-                    space['emoji'],
-                    space['image_url'],
-                    space[0],
+                space_class = space_type_to_class[space['type']](
+                    name=space['name'],
+                    color_int=space['color_int'],
+                    emoji=space['emoji'],
+                    image_url=space['image_url'],
+                    index=count,
                     cost=space['cost'],
                     rent_list=space['rent']
                 )
-            elif space[1]['type'] == 'tax':
+            elif space['type'] == 'tax':
                 space_class = Tax(
-                    space['name'],
-                    space['color_int'],
-                    space['emoji'],
-                    space['image_url'],
-                    space[0],
+                    name=space['name'],
+                    color_int=space['color_int'],
+                    emoji=space['emoji'],
+                    image_url=space['image_url'],
+                    index=count,
                     cost=space['cost']
                 )
             # ColorProperty
             else:
                 space_class = ColorProperty(
-                    space['name'],
-                    space['color_int'],
-                    space['emoji'],
-                    space['image_url'],
-                    space[0],
+                    name=space['name'],
+                    color_int=space['color_int'],
+                    emoji=space['emoji'],
+                    image_url=space['image_url'],
+                    index=count,
                     cost=space['cost'],
                     rent_list=space['rent'],
                     color=space['color'],
+                    color_group=space['color_group'],
                     house_cost=space['house_cost']
                 )
             self._board_list.append(space_class)
@@ -80,10 +81,10 @@ class Board:
         """
         Returns a iterator of dict embeds of the entire board
         """
+        begin: int = 0
+        end: int = 10
         for x in range(4):
             # Integers to slice self._board_list
-            begin: int = 0
-            end: int = 10
             embed_board = {
                 'description': '',
                 'color': 13427655,
@@ -93,14 +94,14 @@ class Board:
                 }
             }
             for space in self[begin:end]:
-                embed_board.descriprtion += str(space)
+                embed_board['description'] += str(space)
 
             if x == 3:
-                embed_board['image'] = 'https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg'
+                embed_board['image'] = dict(url='https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg')
 
-            yield embed_board
             begin += 10
             end += 10
+            yield embed_board
 
     def move_on_board(
         self, player: Player, dice: int = None,
@@ -121,6 +122,7 @@ class Board:
         if jailing:
             jail_space = self[10]
             player.space = jail_space
+            player.in_prison = 3
             jail_space.jailed.append(player)
         # Rolled dice
         elif dice is not None:
