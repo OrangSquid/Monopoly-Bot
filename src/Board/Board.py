@@ -1,27 +1,25 @@
 import json
-from typing import Dict, List, Union, TypeVar, Tuple
+from typing import Dict, List, Any, TypeVar, Tuple
 
-from .Spaces import (ColorProperty, CommunitChestSpace, FreeSpace, Jail,
-                     Jailing, RailroadProperty, ChanceSpace,
-                     ServiceProperty, Space, Tax)
+from .Spaces import Jail, LuckSpace, MonopolyProperty, Space, Tax
 
 Player = TypeVar('Player')
 
 space_type_to_class = {
-    'free_space': FreeSpace,
-    'jail': Jail,
-    'jailing': Jailing,
-    'chance_card': ChanceSpace,
-    'community_chest_card': CommunitChestSpace,
-    'service_property': ServiceProperty,
-    'railroad_property': RailroadProperty
+    'free_space': Space.FreeSpace,
+    'jail': Jail.Jail,
+    'jailing': Jail.Jailing,
+    'chance_card': LuckSpace.ChanceSpace,
+    'community_chest_card': LuckSpace.CommunitChestSpace,
+    'service_property': MonopolyProperty.ServiceProperty,
+    'railroad_property': MonopolyProperty.RailroadProperty
 }
 
 
 class Board:
 
     def __init__(self, board_json: str):
-        self._board_list: List[Space] = list()
+        self._board_list: List[Space.Space] = list()
         with open(board_json, 'r') as file:
             temp_board_dict = json.load(file)
         self.salary = temp_board_dict['salary']
@@ -60,7 +58,7 @@ class Board:
                     deck=luck_cards[space['type']]
                 )
             elif space['type'] == 'tax':
-                space_class = Tax(
+                space_class = Tax.Tax(
                     name=space['name'],
                     color_int=space['color_int'],
                     emoji=space['emoji'],
@@ -70,7 +68,7 @@ class Board:
                 )
             # ColorProperty
             else:
-                space_class = ColorProperty(
+                space_class = MonopolyProperty.ColorProperty(
                     name=space['name'],
                     color_int=space['color_int'],
                     emoji=space['emoji'],
@@ -88,7 +86,7 @@ class Board:
     def __getitem__(self, position) -> Space:
         return self._board_list[position]
 
-    def board_embeds(self) -> Dict[str, Union[str, int]]:
+    def board_embeds(self) -> Dict[str, Any]:
         """
         Returns a iterator of dict embeds of the entire board
         """
@@ -117,7 +115,7 @@ class Board:
     def move_on_board(
         self, player: Player, dice: int = None,
         teleport: int = None, jailing: bool = False
-    ) -> Tuple[Space, bool]:
+    ) -> Tuple[Space.Space, bool]:
         """
         Places the player in a new space in the board.
 

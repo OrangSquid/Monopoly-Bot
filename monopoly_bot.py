@@ -6,7 +6,8 @@ import discord
 from discord.activity import Game
 from discord.ext import commands
 
-from src import MonopolyCore, Player, Board
+from src import MonopolyCore, Player
+from src.Board import Board
 
 # Setting up the logger function for the library
 logger = logging.getLogger('discord')

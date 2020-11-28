@@ -2,8 +2,8 @@ from typing import Dict, List
 
 import discord
 
-from .Spaces import (MonopolyProperty, RailroadProperty,
-                     ServiceProperty, Space)
+from .Board.Spaces.MonopolyProperty import (ServiceProperty, MonopolyProperty, RailroadProperty)
+from .Board.Spaces import Space
 
 
 class Player:
@@ -21,9 +21,9 @@ class Player:
 
     def add_property(self, monopoly_property: MonopolyProperty):
         self.money -= monopoly_property.cost
-        if type(monopoly_property) == ServiceProperty:
+        if issubclass(monopoly_property, ServiceProperty):
             property_type: str = 'service'
-        elif type(monopoly_property) == RailroadProperty:
+        elif issubclass(monopoly_property, RailroadProperty):
             property_type: str = 'railroad'
         else:
             property_type: str = monopoly_property.color

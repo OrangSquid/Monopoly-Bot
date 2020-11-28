@@ -2,16 +2,16 @@ import asyncio
 import datetime
 import json
 import random
-from random import choice
-from typing import Dict, List, Tuple, Union, Callable
+from typing import Callable, Dict, List, Tuple, TypeVar
 
 import discord
 from discord.ext import commands
 
+from . import Reactions
 from .Board import Board
 from .Player import Player
-from .Spaces import (Jailing, Space, Tax, LuckSpace, MonopolyProperty)
-from . import Reactions
+
+Space = TypeVar('Space')
 
 DICE_EMOJI = {
     'Dice1': '<:Dice1:748278516289896468>',
@@ -226,6 +226,7 @@ class Monopoly:
         return event, embed_prisoner
 
     # To be purged from existence
+    
     '''async def finish_turn(self, playing: Player, debt: List[int]) -> bool:
         """
         This is called whenever the player does an action
@@ -301,7 +302,7 @@ class Monopoly:
             key=lambda x: x[1],
             reverse=True
         )
-        self.order = [player for player, dice in rolled_dice]
+        self.order = [player[0] for player in rolled_dice]
 
         # Set everyone's postion to the first space
         self.board[0].here = [player for player in self.order]
@@ -352,7 +353,6 @@ class Monopoly:
             else:
                 prisoner = False
                 self.valid_reactions.append('dice')
-            print(self.valid_reactions)
             # This block is in a gather function to detect possible reaction adds
             # while the bot adds all the possibilites
             Reactions.add_reactions_embed(embed_turn, self.valid_reactions)
