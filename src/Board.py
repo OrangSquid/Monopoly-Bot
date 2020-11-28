@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List, Union, TypeVar
+from typing import Dict, List, Union, TypeVar, Tuple
 
 from .Spaces import (ColorProperty, CommunitChestSpace, FreeSpace, Jail,
                      Jailing, RailroadProperty, ChanceSpace,
@@ -25,12 +25,13 @@ class Board:
         with open(board_json, 'r') as file:
             temp_board_dict = json.load(file)
         self.salary = temp_board_dict['salary']
+        luck_cards = temp_board_dict['luck_cards']
         for count, space in enumerate(temp_board_dict['spaces']):
             # Since jail, jailing, free_space, chance_card and
             # community_chest_card all share the same
             # implementation, this was done to reduce the
             # lines of code
-            if space['type'] in ['jail', 'jailing', 'free_space', 'chance_card', 'community_chest_card']:
+            if space['type'] in ['jail', 'jailing', 'free_space']:
                 space_class = space_type_to_class[space['type']](
                     name=space['name'],
                     color_int=space['color_int'],
@@ -48,6 +49,15 @@ class Board:
                     index=count,
                     cost=space['cost'],
                     rent_list=space['rent']
+                )
+            elif space['type'] in ['chance_card', 'community_chest_card']:
+                space_class = space_type_to_class[space['type']](
+                    name=space['name'],
+                    color_int=space['color_int'],
+                    emoji=space['emoji'],
+                    image_url=space['image_url'],
+                    index=count,
+                    deck=luck_cards[space['type']]
                 )
             elif space['type'] == 'tax':
                 space_class = Tax(
@@ -74,6 +84,7 @@ class Board:
                 )
             self._board_list.append(space_class)
 
+
     def __getitem__(self, position) -> Space:
         return self._board_list[position]
 
@@ -81,10 +92,10 @@ class Board:
         """
         Returns a iterator of dict embeds of the entire board
         """
+        # Integers to slice self._board_list
         begin: int = 0
         end: int = 10
         for x in range(4):
-            # Integers to slice self._board_list
             embed_board = {
                 'description': '',
                 'color': 13427655,
@@ -106,7 +117,7 @@ class Board:
     def move_on_board(
         self, player: Player, dice: int = None,
         teleport: int = None, jailing: bool = False
-    ) -> Space:
+    ) -> Tuple[Space, bool]:
         """
         Places the player in a new space in the board.
 
@@ -114,10 +125,12 @@ class Board:
         or by a type jailing space
 
         This also changes the player.space atribute in player.
-        This method returns the landing space for a possible event
+        This method returns the landing space for a possible event and
+        wheter or not the player as passed GO
         """
         index = player.space.index
         player.space.here.remove(player)
+        give_salary = False
         # Going to jail
         if jailing:
             self[10].lock_prisoner(player)
@@ -126,6 +139,7 @@ class Board:
             landing_index = index + dice
             if landing_index > 39:
                 player.space = self[landing_index - 40]
+                give_salary = True
             else:
                 player.space = self[landing_index]
             player.space.here.append(player)
@@ -134,4 +148,4 @@ class Board:
             player.space = self[teleport]
             player.space.here.append(player)
 
-        return player.space
+        return player.space, give_salary

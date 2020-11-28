@@ -9,7 +9,6 @@ import discord
 from discord.ext import commands
 
 from .Board import Board
-# from .LuckCard import LuckCard
 from .Player import Player
 from .Spaces import (Jailing, Space, Tax, LuckSpace, MonopolyProperty)
 from . import Reactions
@@ -27,6 +26,7 @@ with open('json/embeds.json', 'r') as file:
     global EMBEDS_GLOBAL
     EMBEDS_GLOBAL = json.load(file)
 
+
 class Monopoly:
     """
     Main Class that handles the game loop
@@ -36,7 +36,6 @@ class Monopoly:
     """
 
     def __init__(self, bot, channel, players, board):
-        self.in_course: bool = False
         self.order: List[Player] = players
         self.bot: commands.AutoShardedBot = bot
         self.channel: discord.Channel = channel
@@ -45,6 +44,8 @@ class Monopoly:
         self.houses: int = 32
         self.hotels: int = 12
         self.doubles: int = 0
+        self.dice: Tuple[int] = (0, 0)
+        self.prison_broke = False
         # pointer starts at -1 to compensate for the increment
         # __next__ does before it returns the player
         self._pointer: int = -1
@@ -52,7 +53,7 @@ class Monopoly:
         # While waiting for a reaction to be added, these are the valid ones
         # besides the standard:
         # 'board', 'properties', 'trade', 'bankruptcy'
-        self.valid_reactions: List[str] = []
+        self.valid_reactions: List[str] = list()
 
     def __getitem__(self, index):
         return self.order[index]
@@ -73,25 +74,49 @@ class Monopoly:
             return self[0]
 
     def check_reaction(self, reaction: discord.Emoji, user: discord.User) -> bool:
+        self.choice = Reactions.EMOJI_REACTIONS[str(reaction.emoji)]
         if str(reaction.emoji) in Reactions.EMOJI_REACTIONS:
-            return user == self.playing.user and \
-                Reactions.EMOJI_REACTIONS[str(
-                    reaction.emoji)] in self.valid_reactions
+            return user == self.playing.user and self.choice in self.valid_reactions
         else:
             return False
 
-    async def pay_rent(self, space):
+    async def pay_debt(self):
         pass
 
-    async def trade(self, trade=None):
+    async def trade(self):
         pass
 
-    async def buy_property(self, space):
+    async def buy_property(self):
         pass
+
+    async def declare_bankruptcy(self):
+        pass
+
+    async def auction_property(self):
+        pass
+
+    async def pass_prison_break(self):
+        pass
+
+    async def fine_prison_break(self):
+        pass
+
+    async def nothing(self):
+        pass
+
+    async def check_board(self):
+        for embed in self.board.board_embeds():
+            embed = discord.Embed.from_dict(embed)
+            await self.channel.send(embed=embed)
+
+    async def check_properties(self):
+        for embed in self.playing.properties_embed():
+            embed = discord.Embed.from_dict(embed)
+            await self.channel.send(embed=embed)
 
     async def roll_dice(self, announce: bool) -> Tuple[int]:
         """
-        Function to roll the dice,
+        Rolls dice,
 
         Announce sends the dice emoji directly to self.channel.
 
@@ -103,32 +128,16 @@ class Monopoly:
             await self.channel.send('{} {}'.format(DICE_EMOJI[f'Dice{dice1}'],
                                                    DICE_EMOJI[f'Dice{dice2}']))
         return dice1, dice2
-    
-    async def check_board(self):
-        for embed in self.board.board_embeds():
-            embed = discord.Embed.from_dict(embed)
-            await self.channel.send(embed=embed)
-    
-    async def check_properties(self, playing: Player):
-        for embed in playing.properties_embed():
-            embed = discord.Embed.from_dict(embed)
-            await self.channel.send(embed=embed)
 
-    async def declare_bakrunptcy(self):
-        pass
-
-    async def player_turn(self, playing, dice=[0, 0]) -> Dict:
+    async def player_turn(self) -> Dict:
         """
         This is called whenever the player rolls the dice
 
         Returns a Dict of all the information relevant for
         later use
         """
-
-        # debt = [amount of money, player object reference]
-        debt: List[Union[int, Player]] = [0, None]
-        buy_property: bool = False
-        auction_property: bool = False
+        dice = self.dice
+        playing = self.playing
 
         # Embed making
         embed_landing = discord.Embed.from_dict(EMBEDS_GLOBAL['landing'])
@@ -136,27 +145,26 @@ class Monopoly:
             name=f'{str(playing.user)} end turn', icon_url=playing.avatar_url)
         embed_landing.set_footer(
             text='Monopoly game at \'{}\''.format(self.channel.guild))
+        embed_landing.timestamp = datetime.datetime.now()
 
         # Roll dice if not provided and check for doubles
-        is_double = False
         jailing = False
-        if sum(dice) == 0:
-            dice = await self.roll_dice(False)
-            is_double = dice[0] == dice[1]
-        if is_double:
+        if self.dice[0] == dice[1]: 
             if self.doubles == 2:
                 embed_landing.description = 'You rolled a double 3 times!\n \
                                              You are going to Brazil'
                 jailing = True
+                self._end_turn = True
             else:
                 self.doubles += 1
                 embed_landing.description += '\nYou rolled a double! You can play again!'
+        else:
+            self._end_turn = True
         # Call move_on_board method and store space
-        previous_index = playing.space.index
-        space = self.board.move_on_board(
+        space, give_salary = self.board.move_on_board(
             playing, dice=sum(dice), jailing=jailing)
 
-        # Embed Editing
+        # Embed Editing with space
         embed_landing.description = embed_landing.description.format(
             dice1=DICE_EMOJI[f'Dice{dice[0]}'],
             dice2=DICE_EMOJI[f'Dice{dice[1]}'],
@@ -169,48 +177,22 @@ class Monopoly:
             url=space.image_url)
 
         # Check if player has passed GO
-        if previous_index > space.index and playing.in_prison == 0:
+        if give_salary:
             embed_landing.description += f'\n**You passed by GO!\nYou received {self.board.salary}**'
             playing.money += self.board.salary
+        
+        event = space.event(self.playing, embed_landing)
 
-        # Lands on property
-        if issubclass(type(space), MonopolyProperty):
-            # Somebody is the owner
-            if space.owner is not None:
-                if space.owner == playing:
-                    embed_landing.description += '\nYou landed on your own property!'
-                elif space.mortgage:
-                    embed_landing.description += '\nThis property is mortgaged!\nYou don\'t need to pay rent!'
-                else:
-                    debt = space.pay_rent()
-                    embed_landing.description += f'\n**You must pay {debt[0]}$ to {str(debt[1].user)}**'
-            # Has enough money to buy property
-            elif space.cost < playing.money:
-                embed_landing.description += '\nYou can buy or auction this property!'
-                buy_property = True
-                auction_property = True
-            # Doesn't have enough money to buy property
-            else:
-                embed_landing.description += '\nYou don\'t have enough money!\nYou must auction this property!'
-                auction_property = True
+        return event, embed_landing
 
-        elif issubclass(type(space), LuckSpace):
-            pass
 
-        elif issubclass(type(space), Tax):
-            debt = space.pay_rent()
-            embed_landing.description += f'\nYou must pay {debt[0]} to the bank'
-
-        elif issubclass(type(space), Jailing):
-            self.board.move_on_board(playing, jailing=True)
-            embed_landing.description += '\nYou\'re going to Jail'        
-
-    async def prisoner_turn(self, playing):
+    async def prisoner_turn(self):
         """
         Calls if prisoner decides to roll dice
         """
 
-        choice: str = ''
+        playing = self.playing
+        event: str = str()
 
         embed_prisoner = discord.Embed.from_dict(EMBEDS_GLOBAL['prisoner'])
         embed_prisoner.set_author(
@@ -221,12 +203,15 @@ class Monopoly:
         dice = await self.roll_dice(False)
         if dice[0] == dice[1]:
             embed_prisoner.description += '\nYou rolled a double! You are out of prison!'
+            event = 'double_prison_break'
         elif playing.in_prison > 1:
             embed_prisoner.description += '\nYou didn\'t roll a double!'
             playing.in_prison -= 1
+            event = 'nothing'
         elif playing.in_prison == 1:
             embed_prisoner.description += '\nYou didn\'t roll a double and you must pay a fine (50$) \
                                             or use a prison free pass to get out'
+            event = 'fine_prison_break'
 
         embed_prisoner.description = embed_prisoner.description.format(
             dice1=DICE_EMOJI[f'Dice{dice[0]}'],
@@ -237,17 +222,19 @@ class Monopoly:
         embed_prisoner.timestamp = datetime.datetime.now()
         embed_prisoner.set_thumbnail(
             url=self.board[10].image_url)
+        
+        return event, embed_prisoner
 
-    async def choice_to_end(self):
-        pass
-
-    async def finish_turn(self, playing: Player, debt: List[int]) -> bool:
+    # To be purged from existence
+    '''async def finish_turn(self, playing: Player, debt: List[int]) -> bool:
         """
         This is called whenever the player does an action
         to end their turn
 
         Returns a bool to inform that the action has succeed
         """
+
+        message = str()
 
         if self.choice == 'pay_debt':
             if playing.money < debt[0]:
@@ -288,7 +275,7 @@ class Monopoly:
                 message = f'{playing.user.mention} payed a 50$ fine. They\'re now free'
 
         await self.channel.send(message)
-        return True
+        return True'''
 
     # Main Game Turn
     async def play(self) -> None:
@@ -307,6 +294,7 @@ class Monopoly:
             self.valid_reactions.clear()
             rolled_dice[player] = sum(await self.roll_dice(True))
         self.order.clear()
+        self.valid_reactions = ['board', 'properties', 'trade', 'bankruptcy']
         # Sort self.order dict
         rolled_dice = sorted(
             rolled_dice.items(),
@@ -332,6 +320,7 @@ class Monopoly:
 
         # Main Game loop
         for playing in self:
+            self._end_turn = False
             self.playing = playing
             space: Space = playing.space
 
@@ -352,29 +341,72 @@ class Monopoly:
                 prison_free_pass=playing.prison_free_pass
             )
 
-            self.valid_reactions = ['dice', 'board',
-                                    'properties', 'trade', 'bankruptcy']
-
             # Check if player is in prison
             if playing.in_prison != 0:
-                self.valid_reactions.append('prison_break')
+                prisoner = True
+                self.valid_reactions.append('dice_prison')
+                self.valid_reactions.append('fine_prison_break')
                 if playing.prison_free_pass != 0:
-                    self.valid_reactions.append('use_prison_pass')
+                    self.valid_reactions.append('pass_prison_break')
                 embed_turn.description += f'\n**You\'re in jail\nTurns left in prison: {playing.in_prison}**'
+            else:
+                prisoner = False
+                self.valid_reactions.append('dice')
+            print(self.valid_reactions)
             # This block is in a gather function to detect possible reaction adds
             # while the bot adds all the possibilites
             Reactions.add_reactions_embed(embed_turn, self.valid_reactions)
 
-            message_turn = await self.channel.send(embed=embed_turn)
+            if not self.prison_broke:
+                self.dice = await self.roll_dice(False)
+                message_turn = await self.channel.send(embed=embed_turn)
 
-            await asyncio.gather(
-                Reactions.add_reactions_message(message_turn, self.valid_reactions),
-                self.bot.wait_for('reaction_add', check=self.check_reaction)
-            )
-            self.valid_reactions.clear()
+                await asyncio.gather(
+                    Reactions.add_reactions_message(
+                        message_turn, self.valid_reactions),
+                    self.bot.wait_for('reaction_add', check=self.check_reaction)
+                )
+                event, embed_finish = await self.CHOICE_SWICTHER[self.choice](self)
+            else:
+                event, embed_finish = await self.player_turn()
 
-            self.CHOICE_SWICTHER[self.choice]()
-        
+            self.choice = str()
+            del self.valid_reactions[4:]
+            
+            if event is not None and not prisoner:
+                if event == 'jailing':
+                    self.board[10].lock_prisoner(playing)
+                    self.valid_reactions.append('nothing')
+                else:
+                    self.valid_reactions.append(event)
+                
+                if event == 'buy_property':
+                    self.valid_reactions.append('auction_property')
+            
+            elif event is not None and prisoner:
+                if event == 'double_prison_break':
+                    self.valid_reactions.append('nothing')
+                elif event == 'fine_prison_break':
+                    self.prison_broke = True
+                    self.valid_reactions.append('fine_prison_break')
+                    if playing.prison_free_pass != 0:
+                        self.valid_reactions.append('pass_prison_break')
+                else:
+                    self.valid_reactions.append('nothing')
+            
+            Reactions.add_reactions_embed(embed_finish, self.valid_reactions)
+
+            while self.choice not in self.valid_reactions[4:]:
+                message_finish = await self.channel.send(embed=embed_finish)
+                await asyncio.gather(
+                    Reactions.add_reactions_message(
+                        message_finish, self.valid_reactions),
+                    self.bot.wait_for('reaction_add', check=self.check_reaction)
+                )
+                await self.CHOICE_SWICTHER[self.choice](self)
+            
+            del self.valid_reactions[4:]
+
         await self.channel.send('The game has ended')
         await self.channel.send(f'{self[0]} is the winner')
 
@@ -385,10 +417,10 @@ class Monopoly:
         'properties': check_properties,
         'trade': trade,
         'buy_property': buy_property,
-        'bankruptcy': bankruptcy,
+        'bankruptcy': declare_bankruptcy,
         'auction_property': auction_property,
         'nothing': nothing,
         'pay_debt': pay_debt,
-        'use_prison_pass': use_prison_pass,
-        'prison_break': prison_break
+        'use_prison_pass': pass_prison_break,
+        'fine_prison_break': fine_prison_break
     }

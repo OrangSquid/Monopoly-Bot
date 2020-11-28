@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Tuple, TypeVar, Union
+from typing import List, Tuple, TypeVar, Union, Dict, Any, Optional
+import discord
 
 Player = TypeVar('Player')
 
@@ -32,11 +33,10 @@ class Space(object):
 
         return embed_str, players_here_mention
     
-    def event(self, playing: Player=None):
-        return ('nothing')
+    def event(self, playing: Player, embed: discord.Embed):
+        return 'nothing'
 
 
-@dataclass
 class FreeSpace(Space):
     """
     Class for free spaces
@@ -64,11 +64,12 @@ class Tax(Space):
         embed_str += f' ({self.cost}$)'
         return embed_str + players_here_mention
 
-    def pay_rent(self) -> Tuple[Union[int, None]]:
+    def pay_rent(self) -> Tuple[Optional[int]]:
         return self.cost, None
     
-    def event(self, playing: Player=None):
-        return ('pay_debt')
+    def event(self, playing: Player, embed: discord.Embed):
+        embed.description += f'**\nYou must pay {self.cost}$ to the bank**'
+        return 'pay_debt'
 
 
 @dataclass
@@ -86,7 +87,7 @@ class Jail(Space):
         for prisoner in self.jailed:
             prisoners += f'{prisoner.user.mention}\n'
 
-        return embed_str + players_here_mention + "Jailed:\n" + prisoners
+        return embed_str + players_here_mention + "__Jailed:\n\n__" + prisoners
     
     def release_prisoner(self, prisoner: Player, means: str):
         if means == 'fine':
@@ -114,23 +115,51 @@ class Jailing(Space):
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
         return embed_str + players_here_mention
+    
+    def event(self, playing: Player, embed: discord.Embed):
+        embed.description += '\nYou\'re going to Jail'
+        return 'jailing'
 
 
 @dataclass
 class LuckSpace(Space):
+
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
         return embed_str + players_here_mention
 
 
-@dataclass
 class ChanceSpace(LuckSpace):
-    card_deck: str = 'chance'
+    
+    deck: List[Dict[Any, Any]]
+
+    def __init__(
+        self, name: str, color_int: int, emoji: str,
+        image_url: str, index: int, deck
+    ) -> None:
+        super().__init__(name, color_int, emoji, image_url, index)
+        ChanceSpace.deck = deck
 
 
-@dataclass
+    def event(self, playing: Player, embed: discord.Embed):
+        embed.description += '\nTaking a card from Chance deck.\nIt reads as follows: '
+        return 'nothing'
+
+
 class CommunitChestSpace(LuckSpace):
-    card_deck: str = 'community_chest'
+
+    deck: List[Dict[Any, Any]]
+
+    def __init__(
+        self, name: str, color_int: int, emoji: str,
+        image_url: str, index: int, deck
+    ) -> None:
+        super().__init__(name, color_int, emoji, image_url, index)
+        CommunitChestSpace.deck = deck
+
+    def event(self, playing: Player, embed: discord.Embed):
+        embed.description += '\nTaking a card from Community Chest deck.\nIt reads as follows: '
+        return 'nothing'
 
 
 class MonopolyProperty(Space):
@@ -162,8 +191,23 @@ class MonopolyProperty(Space):
             embed_str += f' | **Rent:** {self.rent}'
         return embed_str, players_here_mention
 
-    def event(self):
-        pass
+    def event(self, player: Player, embed: discord.Embed()):
+        if self.owner is not None:
+            if self.owner == player:
+                embed.description += '\nYou landed on your own property!'
+                return 'nothing'
+            elif self.mortgage:
+                embed.description += '\nThis property is mortgaged!\nYou don\'t need to pay rent!'
+                return 'nothing'
+            else:
+                embed.description += f'\n**You must pay {self.rent}$ to {self.owner}**'
+                return 'pay_rent'
+        elif self.cost > player.money:
+            embed.description += '\nYou don\'t have enough money!\nYou must auction this property!'
+            return 'auction_property'
+        else:
+            embed.description += '\nYou can buy or auction this property!'
+            return 'buy_property'
 
     def buy_property(self, buyer) -> None:
         self.owner = buyer
