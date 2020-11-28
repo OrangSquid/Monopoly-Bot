@@ -3,7 +3,6 @@ import logging
 from typing import Dict, List
 
 import discord
-from discord.activity import Game
 from discord.ext import commands
 
 from src import MonopolyCore, Player
@@ -92,8 +91,13 @@ async def play(ctx):
                 game = prepare_game(BOARDS[0], WAITING[ctx.guild], ctx.channel)
                 PLAYING[ctx.guild] = game
                 WAITING.pop(ctx.guild)
-                await game.play()
-                PLAYING.pop(ctx.guild)
+                try:
+                    await game.play()
+                except Exception as e:
+                    await ctx.send(":x: AN ERROR HAS OCCURRED!")
+                    raise e
+                finally:
+                    PLAYING.pop(ctx.guild)
         elif ctx.author in WAITING[ctx.guild]:
             await ctx.send(":x: You are already WAITING for the game! The first caller of the play command should be the one to start.")
         elif look_for_player(ctx.author):

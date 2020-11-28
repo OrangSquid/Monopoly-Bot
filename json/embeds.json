@@ -7,5 +7,8 @@
     },
     "prisoner": {
         "description": "You rolled a {dice1} {dice2} ({sum_dice})"
+    },
+    "teleport": {
+        "description": "You got teleported to {space}"
     }
 }

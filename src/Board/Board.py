@@ -10,7 +10,7 @@ space_type_to_class = {
     'jail': Jail.Jail,
     'jailing': Jail.Jailing,
     'chance_card': LuckSpace.ChanceSpace,
-    'community_chest_card': LuckSpace.CommunitChestSpace,
+    'community_chest_card': LuckSpace.CommunityChestSpace,
     'service_property': MonopolyProperty.ServiceProperty,
     'railroad_property': MonopolyProperty.RailroadProperty
 }
@@ -64,7 +64,7 @@ class Board:
                     emoji=space['emoji'],
                     image_url=space['image_url'],
                     index=count,
-                    cost=space['cost']
+                    rent=space['cost']
                 )
             # ColorProperty
             else:
@@ -81,7 +81,6 @@ class Board:
                     house_cost=space['house_cost']
                 )
             self._board_list.append(space_class)
-
 
     def __getitem__(self, position) -> Space:
         return self._board_list[position]
@@ -106,7 +105,8 @@ class Board:
                 embed_board['description'] += str(space)
 
             if x == 3:
-                embed_board['image'] = dict(url='https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg')
+                embed_board['image'] = dict(
+                    url='https://raw.githubusercontent.com/OrangSquid/Monopoly-Bot/master/emojis/monopoly_board.jpg')
 
             begin += 10
             end += 10
@@ -143,6 +143,8 @@ class Board:
             player.space.here.append(player)
         # Teleport (luck_card)
         elif teleport is not None:
+            if index > self[teleport].index:
+                give_salary = True
             player.space = self[teleport]
             player.space.here.append(player)
 

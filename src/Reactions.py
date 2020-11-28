@@ -12,7 +12,11 @@ STR_EMBED_ACTION: Dict[str, str] = {
     'nothing': '\n🚫 - Do nothing and end turn',
     'pay_debt': '\n🤑 - Pay debt',
     'use_prison_pass': '\n🎫 - Use the prison free pass',
-    'prison_break': '\n♿ - Pay fine and leave jail'
+    'fine_prison_break': '\n♿ - Pay fine and leave jail',
+    'double_prison_break': '\n🛂 - Leave Jail',
+    'teleport': '\n↘ - Go to specified place',
+    'space_backwards': '\n⏪ - Go back 3 spaces',
+    'jailing': '\n<:brazil:780207221900050445> - Go to Brazil'
 }
 
 EMOJI_REACTIONS: Dict[str, str] = {
@@ -26,7 +30,11 @@ EMOJI_REACTIONS: Dict[str, str] = {
     '🚫': 'nothing',
     '🤑': 'pay_debt',
     '🎫': 'use_prison_pass',
-    '♿': 'prison_break'
+    '♿': 'fine_prison_break',
+    '🛂': 'double_prison_break',
+    '↘': 'teleport',
+    '⏪': 'space_backwards',
+    '<:brazil:780207221900050445>': 'jailing'
 }
 
 STR_REACTION: Dict[str, str] = dict()
@@ -44,18 +52,3 @@ def add_reactions_embed(embed: discord.Embed, reactions) -> discord.Embed:
 async def add_reactions_message(message, reactions):
     for reaction in reactions:
         await message.add_reaction(STR_REACTION[reaction])
-
-
-def add_reactions_list(info) -> Tuple[str]:
-    reactions = ['board', 'properties', 'trade', 'bankruptcy']
-
-    if info['debt'][0] != 0:
-        reactions.append('pay_debt')
-    if info['buy_property']:
-        reactions.append('buy_property')
-    if info['auction_property']:
-        reactions.append('auction_property')
-    if reactions == ['board', 'properties', 'trade', 'bankruptcy']:
-        reactions.append('nothing')
-
-    return reactions

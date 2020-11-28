@@ -18,6 +18,7 @@ class Jail(Space):
         self, name: str, color_int: int, emoji: str,
         image_url: str, index: int
     ) -> None:
+        super().__init__(name, color_int, emoji, image_url, index)
         self.jailed: List[Player] = list()
 
     def __str__(self) -> str:
@@ -31,7 +32,7 @@ class Jail(Space):
     def release_prisoner(self, prisoner: Player, means: str):
         if means == 'fine':
             prisoner.money -= 50
-        elif means == 'prison_free_pass':
+        elif means == 'pass':
             prisoner.prison_free_pass -= 1
         self.jailed.remove(prisoner)
         self.here.append(prisoner)

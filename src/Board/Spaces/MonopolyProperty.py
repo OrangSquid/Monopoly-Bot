@@ -45,8 +45,8 @@ class MonopolyProperty(Space):
                 embed.description += '\nThis property is mortgaged!\nYou don\'t need to pay rent!'
                 return 'nothing'
             else:
-                embed.description += f'\n**You must pay {self.rent}$ to {self.owner}**'
-                return 'pay_rent'
+                embed.description += f'\n**You must pay {self.rent}$ to {self.owner.user}**'
+                return 'pay_debt'
         elif self.cost > player.money:
             embed.description += '\nYou don\'t have enough money!\nYou must auction this property!'
             return 'auction_property'

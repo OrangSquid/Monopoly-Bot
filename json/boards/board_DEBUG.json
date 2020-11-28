@@ -395,7 +395,7 @@
 				23,
 				24
 			],
-			"emoji": "<:red:780195154215567383>"
+			"emoji": "<:red:780591352881610754>"
 		},
 		{
 			"name": "Red Property 3",
@@ -418,7 +418,7 @@
 				23,
 				24
 			],
-			"emoji": "<:red:780195154215567383>"
+			"emoji": "<:red:780591352881610754>"
 		},
 		{
 			"name": "Railroad 3",
@@ -723,7 +723,7 @@
 			},
 			{
 				"type": "house_repair",
-				"money": {
+				"cost": {
 					"house": 25,
 					"hotel": 100
 				},
@@ -772,7 +772,7 @@
 				"text": "Doctor's fees - Pay $50"
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 50,
 				"text": "From sale of stock you get $50"
 			},
@@ -781,27 +781,27 @@
 				"text": "Go to Jail - Go directly to Jail - Do not pass Go, do not collect $200"
 			},
 			{
-				"type": "give_money_players",
+				"type": "receive_money_players",
 				"money": 50,
 				"text": "Grand Opera Night - Collect $50 from every player for opening night seats"
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 100,
 				"text": "Holiday Fund matures - Receive $100"
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 20,
 				"text": "Income tax refund - Receive $20"
 			},
 			{
-				"type": "give_money_players",
+				"type": "receive_money_players",
 				"money": 10,
 				"text": "It's your birthday - Collect $10 from every player."
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 100,
 				"text": "Life insurance matures - Collect $100"
 			},
@@ -816,26 +816,26 @@
 				"text": "Pay school fees of $150"
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 25,
 				"text": "Life insurance matures - Collect $100"
 			},
 			{
 				"type": "house_repair",
-				"money": {
+				"cost": {
 					"house": 40,
 					"hotel": 115
 				},
 				"text": "You are assessed for street repairs - $40 per house - $115 per hotel"
 			},
 			{
-				"type": "give_money",
+				"type": "receive_money",
 				"money": 10,
 				"text": "You have won second prize in a beauty contest - Collect $10"
 			},
 			{
-				"type": "give_money",
-				"money": 100,
+				"type": "receive_money",
+				"money": 10,
 				"text": "You have won second prize in a beauty contest - Collect $10"
 			}
 		]

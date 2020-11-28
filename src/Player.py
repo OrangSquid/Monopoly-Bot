@@ -16,14 +16,16 @@ class Player:
         self.prison_free_pass: int = 0
         self.money: int = 1500
         self.monopolies: List['str'] = list()
+        self.houses: int = 0
+        self.hotels: int = 0
         self.user: discord.User = user
         self.avatar_url: str = str(user.avatar_url)
 
     def add_property(self, monopoly_property: MonopolyProperty):
         self.money -= monopoly_property.cost
-        if issubclass(monopoly_property, ServiceProperty):
+        if issubclass(type(monopoly_property), ServiceProperty):
             property_type: str = 'service'
-        elif issubclass(monopoly_property, RailroadProperty):
+        elif issubclass(type(monopoly_property), RailroadProperty):
             property_type: str = 'railroad'
         else:
             property_type: str = monopoly_property.color

@@ -17,19 +17,19 @@ class Tax(Space):
 
     def __init__(
         self, name: str, color_int: int, emoji: str,
-        image_url: str, index: int, cost: int
+        image_url: str, index: int, rent: int
     ) -> None:
         super().__init__(name, color_int, emoji, image_url, index)
-        self.cost = 0
+        self.rent = rent
 
     def __str__(self) -> str:
         embed_str, players_here_mention = super().__str__()
-        embed_str += f' ({self.cost}$)'
+        embed_str += f' ({self.rent}$)'
         return embed_str + players_here_mention
 
-    def pay_rent(self) -> Tuple[Any]:
-        return self.cost, None
+    def pay_rent(self, rent_multiplier) -> Tuple[Any]:
+        return self.rent * rent_multiplier, None
 
     def event(self, playing: Player, embed: discord.Embed):
-        embed.description += f'**\nYou must pay {self.cost}$ to the bank**'
+        embed.description += f'**\nYou must pay {self.rent}$ to the bank**'
         return 'pay_debt'
